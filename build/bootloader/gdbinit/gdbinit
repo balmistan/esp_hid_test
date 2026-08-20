@@ -1,0 +1,2 @@
+source /home/daniele/esp_hid_test/build/bootloader/gdbinit/symbols
+source /home/daniele/esp_hid_test/build/bootloader/gdbinit/connect
