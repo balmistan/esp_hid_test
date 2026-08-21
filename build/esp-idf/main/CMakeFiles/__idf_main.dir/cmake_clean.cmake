@@ -5,8 +5,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/__idf_main.dir/bluetooth/hid_ble.c.obj.d"
   "CMakeFiles/__idf_main.dir/bluetooth/hid_bluetooth.c.obj"
   "CMakeFiles/__idf_main.dir/bluetooth/hid_bluetooth.c.obj.d"
-  "CMakeFiles/__idf_main.dir/esp_hid_device_main.c.obj"
-  "CMakeFiles/__idf_main.dir/esp_hid_device_main.c.obj.d"
   "CMakeFiles/__idf_main.dir/esp_hid_gap.c.obj"
   "CMakeFiles/__idf_main.dir/esp_hid_gap.c.obj.d"
   "CMakeFiles/__idf_main.dir/hid/hid_common.c.obj"

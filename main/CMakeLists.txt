@@ -1,6 +1,6 @@
 set(srcs
     "app_main.c"
-    "esp_hid_device_main.c"
+    "app_main.c"
     "esp_hid_gap.c"
 
     "bluetooth/hid_bluetooth.c"

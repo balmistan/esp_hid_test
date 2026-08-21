@@ -247,30 +247,6 @@ bluetooth/hid_bluetooth.c.s:
 	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_bluetooth.c.s
 .PHONY : bluetooth/hid_bluetooth.c.s
 
-esp_hid_device_main.obj: esp_hid_device_main.c.obj
-.PHONY : esp_hid_device_main.obj
-
-# target to build an object file
-esp_hid_device_main.c.obj:
-	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_device_main.c.obj
-.PHONY : esp_hid_device_main.c.obj
-
-esp_hid_device_main.i: esp_hid_device_main.c.i
-.PHONY : esp_hid_device_main.i
-
-# target to preprocess a source file
-esp_hid_device_main.c.i:
-	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_device_main.c.i
-.PHONY : esp_hid_device_main.c.i
-
-esp_hid_device_main.s: esp_hid_device_main.c.s
-.PHONY : esp_hid_device_main.s
-
-# target to generate assembly for a file
-esp_hid_device_main.c.s:
-	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_device_main.c.s
-.PHONY : esp_hid_device_main.c.s
-
 esp_hid_gap.obj: esp_hid_gap.c.obj
 .PHONY : esp_hid_gap.obj
 
@@ -437,9 +413,6 @@ help:
 	@echo "... bluetooth/hid_bluetooth.obj"
 	@echo "... bluetooth/hid_bluetooth.i"
 	@echo "... bluetooth/hid_bluetooth.s"
-	@echo "... esp_hid_device_main.obj"
-	@echo "... esp_hid_device_main.i"
-	@echo "... esp_hid_device_main.s"
 	@echo "... esp_hid_gap.obj"
 	@echo "... esp_hid_gap.i"
 	@echo "... esp_hid_gap.s"

@@ -181,7 +181,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/home/daniele/esp-idf/tools/kconfig_new/confgen.py"
   "/home/daniele/esp-idf/tools/kconfig_new/config.env.in"
   "/home/daniele/esp_hid_test/.git/HEAD"
-  "/home/daniele/esp_hid_test/.git/refs/heads/Main"
+  "/home/daniele/esp_hid_test/.git/refs/heads/main"
   "/home/daniele/esp_hid_test/CMakeLists.txt"
   "CMakeFiles/3.28.3/CMakeASMCompiler.cmake"
   "CMakeFiles/3.28.3/CMakeCCompiler.cmake"

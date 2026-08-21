@@ -83,24 +83,10 @@ esp-idf/main/CMakeFiles/__idf_main.dir/app_main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/__idf_main.dir/app_main.c.s"
 	cd /home/daniele/esp_hid_test/build/esp-idf/main && /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/daniele/esp_hid_test/main/app_main.c -o CMakeFiles/__idf_main.dir/app_main.c.s
 
-esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_device_main.c.obj: esp-idf/main/CMakeFiles/__idf_main.dir/flags.make
-esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_device_main.c.obj: /home/daniele/esp_hid_test/main/esp_hid_device_main.c
-esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_device_main.c.obj: esp-idf/main/CMakeFiles/__idf_main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/daniele/esp_hid_test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_device_main.c.obj"
-	cd /home/daniele/esp_hid_test/build/esp-idf/main && /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_device_main.c.obj -MF CMakeFiles/__idf_main.dir/esp_hid_device_main.c.obj.d -o CMakeFiles/__idf_main.dir/esp_hid_device_main.c.obj -c /home/daniele/esp_hid_test/main/esp_hid_device_main.c
-
-esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_device_main.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/__idf_main.dir/esp_hid_device_main.c.i"
-	cd /home/daniele/esp_hid_test/build/esp-idf/main && /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/daniele/esp_hid_test/main/esp_hid_device_main.c > CMakeFiles/__idf_main.dir/esp_hid_device_main.c.i
-
-esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_device_main.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/__idf_main.dir/esp_hid_device_main.c.s"
-	cd /home/daniele/esp_hid_test/build/esp-idf/main && /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/daniele/esp_hid_test/main/esp_hid_device_main.c -o CMakeFiles/__idf_main.dir/esp_hid_device_main.c.s
-
 esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_gap.c.obj: esp-idf/main/CMakeFiles/__idf_main.dir/flags.make
 esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_gap.c.obj: /home/daniele/esp_hid_test/main/esp_hid_gap.c
 esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_gap.c.obj: esp-idf/main/CMakeFiles/__idf_main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/daniele/esp_hid_test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_gap.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/daniele/esp_hid_test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_gap.c.obj"
 	cd /home/daniele/esp_hid_test/build/esp-idf/main && /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_gap.c.obj -MF CMakeFiles/__idf_main.dir/esp_hid_gap.c.obj.d -o CMakeFiles/__idf_main.dir/esp_hid_gap.c.obj -c /home/daniele/esp_hid_test/main/esp_hid_gap.c
 
 esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_gap.c.i: cmake_force
@@ -114,7 +100,7 @@ esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_gap.c.s: cmake_force
 esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_bluetooth.c.obj: esp-idf/main/CMakeFiles/__idf_main.dir/flags.make
 esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_bluetooth.c.obj: /home/daniele/esp_hid_test/main/bluetooth/hid_bluetooth.c
 esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_bluetooth.c.obj: esp-idf/main/CMakeFiles/__idf_main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/daniele/esp_hid_test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_bluetooth.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/daniele/esp_hid_test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_bluetooth.c.obj"
 	cd /home/daniele/esp_hid_test/build/esp-idf/main && /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_bluetooth.c.obj -MF CMakeFiles/__idf_main.dir/bluetooth/hid_bluetooth.c.obj.d -o CMakeFiles/__idf_main.dir/bluetooth/hid_bluetooth.c.obj -c /home/daniele/esp_hid_test/main/bluetooth/hid_bluetooth.c
 
 esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_bluetooth.c.i: cmake_force
@@ -128,7 +114,7 @@ esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_bluetooth.c.s: cmake_force
 esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_ble.c.obj: esp-idf/main/CMakeFiles/__idf_main.dir/flags.make
 esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_ble.c.obj: /home/daniele/esp_hid_test/main/bluetooth/hid_ble.c
 esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_ble.c.obj: esp-idf/main/CMakeFiles/__idf_main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/daniele/esp_hid_test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_ble.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/daniele/esp_hid_test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_ble.c.obj"
 	cd /home/daniele/esp_hid_test/build/esp-idf/main && /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_ble.c.obj -MF CMakeFiles/__idf_main.dir/bluetooth/hid_ble.c.obj.d -o CMakeFiles/__idf_main.dir/bluetooth/hid_ble.c.obj -c /home/daniele/esp_hid_test/main/bluetooth/hid_ble.c
 
 esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_ble.c.i: cmake_force
@@ -142,7 +128,7 @@ esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_ble.c.s: cmake_force
 esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_common.c.obj: esp-idf/main/CMakeFiles/__idf_main.dir/flags.make
 esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_common.c.obj: /home/daniele/esp_hid_test/main/hid/hid_common.c
 esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_common.c.obj: esp-idf/main/CMakeFiles/__idf_main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/daniele/esp_hid_test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_common.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/daniele/esp_hid_test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_common.c.obj"
 	cd /home/daniele/esp_hid_test/build/esp-idf/main && /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_common.c.obj -MF CMakeFiles/__idf_main.dir/hid/hid_common.c.obj.d -o CMakeFiles/__idf_main.dir/hid/hid_common.c.obj -c /home/daniele/esp_hid_test/main/hid/hid_common.c
 
 esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_common.c.i: cmake_force
@@ -156,7 +142,7 @@ esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_common.c.s: cmake_force
 esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keyboard.c.obj: esp-idf/main/CMakeFiles/__idf_main.dir/flags.make
 esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keyboard.c.obj: /home/daniele/esp_hid_test/main/hid/hid_keyboard.c
 esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keyboard.c.obj: esp-idf/main/CMakeFiles/__idf_main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/daniele/esp_hid_test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keyboard.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/daniele/esp_hid_test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keyboard.c.obj"
 	cd /home/daniele/esp_hid_test/build/esp-idf/main && /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keyboard.c.obj -MF CMakeFiles/__idf_main.dir/hid/hid_keyboard.c.obj.d -o CMakeFiles/__idf_main.dir/hid/hid_keyboard.c.obj -c /home/daniele/esp_hid_test/main/hid/hid_keyboard.c
 
 esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keyboard.c.i: cmake_force
@@ -170,7 +156,7 @@ esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keyboard.c.s: cmake_force
 esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_mouse.c.obj: esp-idf/main/CMakeFiles/__idf_main.dir/flags.make
 esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_mouse.c.obj: /home/daniele/esp_hid_test/main/hid/hid_mouse.c
 esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_mouse.c.obj: esp-idf/main/CMakeFiles/__idf_main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/daniele/esp_hid_test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_mouse.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/daniele/esp_hid_test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_mouse.c.obj"
 	cd /home/daniele/esp_hid_test/build/esp-idf/main && /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_mouse.c.obj -MF CMakeFiles/__idf_main.dir/hid/hid_mouse.c.obj.d -o CMakeFiles/__idf_main.dir/hid/hid_mouse.c.obj -c /home/daniele/esp_hid_test/main/hid/hid_mouse.c
 
 esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_mouse.c.i: cmake_force
@@ -184,7 +170,7 @@ esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_mouse.c.s: cmake_force
 esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_reports.c.obj: esp-idf/main/CMakeFiles/__idf_main.dir/flags.make
 esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_reports.c.obj: /home/daniele/esp_hid_test/main/hid/hid_reports.c
 esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_reports.c.obj: esp-idf/main/CMakeFiles/__idf_main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/daniele/esp_hid_test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_reports.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/daniele/esp_hid_test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_reports.c.obj"
 	cd /home/daniele/esp_hid_test/build/esp-idf/main && /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_reports.c.obj -MF CMakeFiles/__idf_main.dir/hid/hid_reports.c.obj.d -o CMakeFiles/__idf_main.dir/hid/hid_reports.c.obj -c /home/daniele/esp_hid_test/main/hid/hid_reports.c
 
 esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_reports.c.i: cmake_force
@@ -198,7 +184,7 @@ esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_reports.c.s: cmake_force
 esp-idf/main/CMakeFiles/__idf_main.dir/input/button.c.obj: esp-idf/main/CMakeFiles/__idf_main.dir/flags.make
 esp-idf/main/CMakeFiles/__idf_main.dir/input/button.c.obj: /home/daniele/esp_hid_test/main/input/button.c
 esp-idf/main/CMakeFiles/__idf_main.dir/input/button.c.obj: esp-idf/main/CMakeFiles/__idf_main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/daniele/esp_hid_test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object esp-idf/main/CMakeFiles/__idf_main.dir/input/button.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/daniele/esp_hid_test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object esp-idf/main/CMakeFiles/__idf_main.dir/input/button.c.obj"
 	cd /home/daniele/esp_hid_test/build/esp-idf/main && /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT esp-idf/main/CMakeFiles/__idf_main.dir/input/button.c.obj -MF CMakeFiles/__idf_main.dir/input/button.c.obj.d -o CMakeFiles/__idf_main.dir/input/button.c.obj -c /home/daniele/esp_hid_test/main/input/button.c
 
 esp-idf/main/CMakeFiles/__idf_main.dir/input/button.c.i: cmake_force
@@ -212,7 +198,6 @@ esp-idf/main/CMakeFiles/__idf_main.dir/input/button.c.s: cmake_force
 # Object files for target __idf_main
 __idf_main_OBJECTS = \
 "CMakeFiles/__idf_main.dir/app_main.c.obj" \
-"CMakeFiles/__idf_main.dir/esp_hid_device_main.c.obj" \
 "CMakeFiles/__idf_main.dir/esp_hid_gap.c.obj" \
 "CMakeFiles/__idf_main.dir/bluetooth/hid_bluetooth.c.obj" \
 "CMakeFiles/__idf_main.dir/bluetooth/hid_ble.c.obj" \
@@ -226,7 +211,6 @@ __idf_main_OBJECTS = \
 __idf_main_EXTERNAL_OBJECTS =
 
 esp-idf/main/libmain.a: esp-idf/main/CMakeFiles/__idf_main.dir/app_main.c.obj
-esp-idf/main/libmain.a: esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_device_main.c.obj
 esp-idf/main/libmain.a: esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_gap.c.obj
 esp-idf/main/libmain.a: esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_bluetooth.c.obj
 esp-idf/main/libmain.a: esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_ble.c.obj
@@ -237,7 +221,7 @@ esp-idf/main/libmain.a: esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_reports.c
 esp-idf/main/libmain.a: esp-idf/main/CMakeFiles/__idf_main.dir/input/button.c.obj
 esp-idf/main/libmain.a: esp-idf/main/CMakeFiles/__idf_main.dir/build.make
 esp-idf/main/libmain.a: esp-idf/main/CMakeFiles/__idf_main.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/daniele/esp_hid_test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking C static library libmain.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/daniele/esp_hid_test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking C static library libmain.a"
 	cd /home/daniele/esp_hid_test/build/esp-idf/main && $(CMAKE_COMMAND) -P CMakeFiles/__idf_main.dir/cmake_clean_target.cmake
 	cd /home/daniele/esp_hid_test/build/esp-idf/main && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/__idf_main.dir/link.txt --verbose=$(VERBOSE)
 

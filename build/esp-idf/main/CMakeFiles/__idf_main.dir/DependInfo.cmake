@@ -11,7 +11,6 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/daniele/esp_hid_test/main/app_main.c" "esp-idf/main/CMakeFiles/__idf_main.dir/app_main.c.obj" "gcc" "esp-idf/main/CMakeFiles/__idf_main.dir/app_main.c.obj.d"
   "/home/daniele/esp_hid_test/main/bluetooth/hid_ble.c" "esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_ble.c.obj" "gcc" "esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_ble.c.obj.d"
   "/home/daniele/esp_hid_test/main/bluetooth/hid_bluetooth.c" "esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_bluetooth.c.obj" "gcc" "esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_bluetooth.c.obj.d"
-  "/home/daniele/esp_hid_test/main/esp_hid_device_main.c" "esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_device_main.c.obj" "gcc" "esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_device_main.c.obj.d"
   "/home/daniele/esp_hid_test/main/esp_hid_gap.c" "esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_gap.c.obj" "gcc" "esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_gap.c.obj.d"
   "/home/daniele/esp_hid_test/main/hid/hid_common.c" "esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_common.c.obj" "gcc" "esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_common.c.obj.d"
   "/home/daniele/esp_hid_test/main/hid/hid_keyboard.c" "esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keyboard.c.obj" "gcc" "esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keyboard.c.obj.d"
