@@ -8,21 +8,11 @@ Configuration Report
                                                                                                            
   Disabled Symbols/Choices With User-Set Value                                                             
    ─────────────────────────────────────────────────────────────────────────────────────────────────────   
-    * BT_CLASSIC_ENABLED (defined at /home/daniele/esp-idf/components/bt/host/bluedroid/Kconfig.in:44)     
-    with user-set value y from /tmp/kconfgen_tmpjiqefws7                                                   
-    * BT_SDP_COMMON_ENABLED (defined at                                                                    
-    /home/daniele/esp-idf/components/bt/host/bluedroid/Kconfig.in:131) with user-set value y from          
-    /tmp/kconfgen_tmpjiqefws7                                                                              
-    * BT_HID_ENABLED (defined at /home/daniele/esp-idf/components/bt/host/bluedroid/Kconfig.in:208)        
-    with user-set value y from /tmp/kconfgen_tmpjiqefws7                                                   
-    * BT_HID_DEVICE_ENABLED (defined at                                                                    
-    /home/daniele/esp-idf/components/bt/host/bluedroid/Kconfig.in:222) with user-set value y from          
-    /tmp/kconfgen_tmpjiqefws7                                                                              
     * BT_BLE_ENABLED (defined at /home/daniele/esp-idf/components/bt/host/bluedroid/Kconfig.in:266)        
-    with user-set value y from /tmp/kconfgen_tmpy62crj8w                                                   
+    with user-set value y from /tmp/kconfgen_tmponylsyac                                                   
     * BT_BLE_42_FEATURES_SUPPORTED (defined at                                                             
     /home/daniele/esp-idf/components/bt/host/bluedroid/Kconfig.in:1564) with user-set value y from         
-    /tmp/kconfgen_tmpy62crj8w                                                                              
+    /tmp/kconfgen_tmponylsyac                                                                              
    ─────────────────────────────────────────────────────────────────────────────────────────────────────   
  ───────────────────────────────────────────────────────────────────────────────────────────────────────── 
 CMake Warning at /home/daniele/esp-idf/tools/cmake/component_validation.cmake:106 (message):
@@ -84,3 +74,18 @@ Call Stack (most recent call first):
   /home/daniele/esp-idf/CMakeLists.txt:353 (__component_validation_run_checks)
 
 
+CMake Error at /home/daniele/esp-idf/tools/cmake/component.cmake:494 (add_library):
+  Cannot find source file:
+
+    /home/daniele/esp_hid_test/main/hid_bluetooth.c
+Call Stack (most recent call first):
+  main/CMakeLists.txt:5 (idf_component_register)
+
+
+CMake Error at /home/daniele/esp-idf/tools/cmake/component.cmake:494 (add_library):
+  No SOURCES given to target: __idf_main
+Call Stack (most recent call first):
+  main/CMakeLists.txt:5 (idf_component_register)
+
+
+CMake Generate step failed.  Build files cannot be regenerated correctly.

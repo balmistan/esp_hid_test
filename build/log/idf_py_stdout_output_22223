@@ -18,16 +18,12 @@ Command: cmake -G Unix Makefiles -B /home/daniele/esp_hid_test/build -DPYTHON_DE
 -- Check for working CXX compiler: /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/bin/xtensa-esp32s3-elf-g++ - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- git rev-parse returned 'fatal: Kein Git-Repository (oder irgendeines der Elternverzeichnisse): .git'
--- Could not use 'git describe' to determine PROJECT_VER.
 -- Building ESP-IDF components for target esp32s3
 -- ESP-TEE is currently supported only on the esp32c6;esp32h2;esp32c5;esp32c61 SoCs
 -- KCONFIG_REPORT_VERBOSITY not set, using default
 -- Project sdkconfig file /home/daniele/esp_hid_test/sdkconfig
 Loading defaults file /home/daniele/esp_hid_test/sdkconfig.defaults...
-warning: unknown kconfig symbol 'BTDM_CTRL_MODE_BTDM' assigned to 'y' in /home/daniele/esp_hid_test/sdkconfig.defaults
 Loading defaults file /home/daniele/esp_hid_test/sdkconfig.defaults.esp32s3...
-warning: unknown kconfig symbol 'BTDM_CTRL_MODE_BTDM' assigned to 'y' in /home/daniele/esp_hid_test/sdkconfig.defaults.esp32s3
 -- Compiler supported targets: xtensa-esp-elf
 -- Detecting C compiler ABI info
 -- Detecting C compiler ABI info - done
@@ -37,7 +33,7 @@ warning: unknown kconfig symbol 'BTDM_CTRL_MODE_BTDM' assigned to 'y' in /home/d
 -- Detecting C compiler ABI info - done
 -- Detecting CXX compiler ABI info
 -- Detecting CXX compiler ABI info - done
--- App "esp_hid_device" version: 1
+-- App "esp_hid_device" version: 48b6f19-dirty
 -- Found Python3: /home/daniele/.espressif/python_env/idf6.1_py3.12_env/bin/python (found version "3.12.3") found components: Interpreter 
 -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
 -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
@@ -63,6 +59,4 @@ warning: unknown kconfig symbol 'BTDM_CTRL_MODE_BTDM' assigned to 'y' in /home/d
 -- Adding linker script /home/daniele/esp-idf/components/soc/esp32s3/ld/esp32s3.peripherals.ld
 -- Components: app_update bootloader bootloader_support bt cxx efuse esp_app_format esp_blockdev esp_bootloader_format esp_coex esp_common esp_driver_dma esp_driver_gpio esp_driver_spi esp_driver_uart esp_driver_usb_serial_jtag esp_event esp_gdbstub esp_hal_ana_conv esp_hal_clock esp_hal_dma esp_hal_gpio esp_hal_gpspi esp_hal_mspi esp_hal_pmu esp_hal_rtc_timer esp_hal_security esp_hal_systimer esp_hal_timg esp_hal_touch_sens esp_hal_uart esp_hal_usb esp_hal_wdt esp_hid esp_hw_support esp_libc esp_mm esp_netif esp_netif_stack esp_partition esp_phy esp_pm esp_psram esp_ringbuf esp_rom esp_security esp_stdio esp_system esp_timer esp_usb_cdc_rom_console esp_wifi esptool_py freertos hal heap log lwip main mbedtls nvs_flash nvs_sec_provider partition_table pthread soc spi_flash vfs wpa_supplicant xtensa
 -- Component paths: /home/daniele/esp-idf/components/app_update /home/daniele/esp-idf/components/bootloader /home/daniele/esp-idf/components/bootloader_support /home/daniele/esp-idf/components/bt /home/daniele/esp-idf/components/cxx /home/daniele/esp-idf/components/efuse /home/daniele/esp-idf/components/esp_app_format /home/daniele/esp-idf/components/esp_blockdev /home/daniele/esp-idf/components/esp_bootloader_format /home/daniele/esp-idf/components/esp_coex /home/daniele/esp-idf/components/esp_common /home/daniele/esp-idf/components/esp_driver_dma /home/daniele/esp-idf/components/esp_driver_gpio /home/daniele/esp-idf/components/esp_driver_spi /home/daniele/esp-idf/components/esp_driver_uart /home/daniele/esp-idf/components/esp_driver_usb_serial_jtag /home/daniele/esp-idf/components/esp_event /home/daniele/esp-idf/components/esp_gdbstub /home/daniele/esp-idf/components/esp_hal_ana_conv /home/daniele/esp-idf/components/esp_hal_clock /home/daniele/esp-idf/components/esp_hal_dma /home/daniele/esp-idf/components/esp_hal_gpio /home/daniele/esp-idf/components/esp_hal_gpspi /home/daniele/esp-idf/components/esp_hal_mspi /home/daniele/esp-idf/components/esp_hal_pmu /home/daniele/esp-idf/components/esp_hal_rtc_timer /home/daniele/esp-idf/components/esp_hal_security /home/daniele/esp-idf/components/esp_hal_systimer /home/daniele/esp-idf/components/esp_hal_timg /home/daniele/esp-idf/components/esp_hal_touch_sens /home/daniele/esp-idf/components/esp_hal_uart /home/daniele/esp-idf/components/esp_hal_usb /home/daniele/esp-idf/components/esp_hal_wdt /home/daniele/esp-idf/components/esp_hid /home/daniele/esp-idf/components/esp_hw_support /home/daniele/esp-idf/components/esp_libc /home/daniele/esp-idf/components/esp_mm /home/daniele/esp-idf/components/esp_netif /home/daniele/esp-idf/components/esp_netif_stack /home/daniele/esp-idf/components/esp_partition /home/daniele/esp-idf/components/esp_phy /home/daniele/esp-idf/components/esp_pm /home/daniele/esp-idf/components/esp_psram /home/daniele/esp-idf/components/esp_ringbuf /home/daniele/esp-idf/components/esp_rom /home/daniele/esp-idf/components/esp_security /home/daniele/esp-idf/components/esp_stdio /home/daniele/esp-idf/components/esp_system /home/daniele/esp-idf/components/esp_timer /home/daniele/esp-idf/components/esp_usb_cdc_rom_console /home/daniele/esp-idf/components/esp_wifi /home/daniele/esp-idf/components/esptool_py /home/daniele/esp-idf/components/freertos /home/daniele/esp-idf/components/hal /home/daniele/esp-idf/components/heap /home/daniele/esp-idf/components/log /home/daniele/esp-idf/components/lwip /home/daniele/esp_hid_test/main /home/daniele/esp-idf/components/mbedtls /home/daniele/esp-idf/components/nvs_flash /home/daniele/esp-idf/components/nvs_sec_provider /home/daniele/esp-idf/components/partition_table /home/daniele/esp-idf/components/pthread /home/daniele/esp-idf/components/soc /home/daniele/esp-idf/components/spi_flash /home/daniele/esp-idf/components/vfs /home/daniele/esp-idf/components/wpa_supplicant /home/daniele/esp-idf/components/xtensa
--- Configuring done (11.5s)
--- Generating done (0.9s)
--- Build files have been written to: /home/daniele/esp_hid_test/build
+-- Configuring done (11.1s)
