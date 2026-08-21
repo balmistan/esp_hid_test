@@ -130,8 +130,6 @@ esp-idf/main/CMakeFiles/__idf_main.dir/app_main.c.obj: \
  /home/daniele/esp-idf/components/nvs_flash/include/nvs.h \
  /home/daniele/esp-idf/components/esp_partition/include/esp_partition.h \
  /home/daniele/esp-idf/components/esp_blockdev/include/esp_blockdev.h \
- /home/daniele/esp-idf/components/bt/include/esp32c3/include/esp_bt.h \
- /home/daniele/esp-idf/components/esp_system/include/esp_task.h \
  /home/daniele/esp-idf/components/esp_driver_gpio/include/driver/gpio.h \
  /home/daniele/esp-idf/components/esp_hal_gpio/include/hal/gpio_types.h \
  /home/daniele/esp-idf/components/esp_hal_gpio/esp32s3/include/soc/gpio_num.h \
@@ -190,4 +188,6 @@ esp-idf/main/CMakeFiles/__idf_main.dir/app_main.c.obj: \
  /home/daniele/esp-idf/components/esp_hid/include/esp_hidd.h \
  /home/daniele/esp-idf/components/esp_hid/include/esp_hid_common.h \
  /home/daniele/esp-idf/components/esp_hid/include/esp_hidd_transport.h \
- /home/daniele/esp_hid_test/main/esp_hid_gap.h
+ /home/daniele/esp_hid_test/main/esp_hid_gap.h \
+ /home/daniele/esp-idf/components/bt/include/esp32c3/include/esp_bt.h \
+ /home/daniele/esp-idf/components/esp_system/include/esp_task.h
