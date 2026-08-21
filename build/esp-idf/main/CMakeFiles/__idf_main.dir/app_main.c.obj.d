@@ -29,6 +29,7 @@ esp-idf/main/CMakeFiles/__idf_main.dir/app_main.c.obj: \
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/strings.h \
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/sys/string.h \
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/inttypes.h \
+ /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/lib/gcc/xtensa-esp-elf/15.2.0/include/stdbool.h \
  /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/FreeRTOS.h \
  /home/daniele/esp-idf/components/freertos/config/include/freertos/FreeRTOSConfig.h \
  /home/daniele/esp-idf/components/esp_libc/platform_include/assert.h \
@@ -50,7 +51,6 @@ esp-idf/main/CMakeFiles/__idf_main.dir/app_main.c.obj: \
  /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/portable.h \
  /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/deprecated_definitions.h \
  /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos/portmacro.h \
- /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/lib/gcc/xtensa-esp-elf/15.2.0/include/stdbool.h \
  /home/daniele/esp-idf/components/xtensa/include/xtensa/xtruntime.h \
  /home/daniele/esp-idf/components/xtensa/esp32s3/include/xtensa/config/xt_specreg.h \
  /home/daniele/esp-idf/components/xtensa/include/xtensa/xtruntime-core-state.h \
@@ -100,21 +100,6 @@ esp-idf/main/CMakeFiles/__idf_main.dir/app_main.c.obj: \
  /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/stream_buffer.h \
  /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/event_groups.h \
  /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/timers.h \
- /home/daniele/esp-idf/components/esp_wifi/include/esp_wifi.h \
- /home/daniele/esp-idf/components/esp_wifi/include/esp_wifi_types.h \
- /home/daniele/esp-idf/components/esp_wifi/include/esp_wifi_types_generic.h \
- /home/daniele/esp-idf/components/esp_event/include/esp_event_base.h \
- /home/daniele/esp-idf/components/esp_wifi/include/local/esp_wifi_types_native.h \
- /home/daniele/esp-idf/components/esp_wifi/include/esp_wifi_types_generic.h \
- /home/daniele/esp-idf/components/esp_event/include/esp_event.h \
- /home/daniele/esp-idf/components/esp_wifi/include/esp_wifi_crypto_types.h \
- /home/daniele/esp-idf/components/esp_wifi/include/esp_wifi_default.h \
- /home/daniele/esp-idf/components/esp_netif/include/esp_netif.h \
- /home/daniele/esp-idf/components/esp_netif/include/esp_netif_ip_addr.h \
- /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/machine/endian.h \
- /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/machine/_endian.h \
- /home/daniele/esp-idf/components/esp_netif/include/esp_netif_types.h \
- /home/daniele/esp-idf/components/esp_netif/include/esp_netif_defaults.h \
  /home/daniele/esp-idf/components/log/include/esp_log.h \
  /home/daniele/esp-idf/components/log/include/esp_log_config.h \
  /home/daniele/esp-idf/components/log/include/esp_log_level.h \
@@ -186,6 +171,8 @@ esp-idf/main/CMakeFiles/__idf_main.dir/app_main.c.obj: \
  /home/daniele/esp-idf/components/bt/host/nimble/nimble/porting/nimble/include/nimble/nimble_port.h \
  /home/daniele/esp-idf/components/bt/host/nimble/nimble/porting/npl/freertos/include/nimble/nimble_port_freertos.h \
  /home/daniele/esp-idf/components/esp_hid/include/esp_hidd.h \
+ /home/daniele/esp-idf/components/esp_event/include/esp_event.h \
+ /home/daniele/esp-idf/components/esp_event/include/esp_event_base.h \
  /home/daniele/esp-idf/components/esp_hid/include/esp_hid_common.h \
  /home/daniele/esp-idf/components/esp_hid/include/esp_hidd_transport.h \
  /home/daniele/esp_hid_test/main/esp_hid_gap.h \

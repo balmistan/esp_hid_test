@@ -13,9 +13,7 @@ esp-idf/main/CMakeFiles/__idf_main.dir/app_main.c.obj
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/inttypes.h
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/limits.h
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/machine/_default_types.h
- /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/machine/_endian.h
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/machine/_types.h
- /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/machine/endian.h
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/machine/ieeefp.h
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/machine/stdlib.h
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/picolibc.h
@@ -110,10 +108,6 @@ esp-idf/main/CMakeFiles/__idf_main.dir/app_main.c.obj
  /home/daniele/esp-idf/components/esp_libc/platform_include/sys/cdefs.h
  /home/daniele/esp-idf/components/esp_libc/platform_include/sys/lock.h
  /home/daniele/esp-idf/components/esp_libc/platform_include/sys/reent.h
- /home/daniele/esp-idf/components/esp_netif/include/esp_netif.h
- /home/daniele/esp-idf/components/esp_netif/include/esp_netif_defaults.h
- /home/daniele/esp-idf/components/esp_netif/include/esp_netif_ip_addr.h
- /home/daniele/esp-idf/components/esp_netif/include/esp_netif_types.h
  /home/daniele/esp-idf/components/esp_partition/include/esp_partition.h
  /home/daniele/esp-idf/components/esp_rom/include/esp_rom_gpio.h
  /home/daniele/esp-idf/components/esp_rom/include/esp_rom_sys.h
@@ -121,12 +115,6 @@ esp-idf/main/CMakeFiles/__idf_main.dir/app_main.c.obj
  /home/daniele/esp-idf/components/esp_system/include/esp_system.h
  /home/daniele/esp-idf/components/esp_system/include/esp_task.h
  /home/daniele/esp-idf/components/esp_timer/include/esp_timer.h
- /home/daniele/esp-idf/components/esp_wifi/include/esp_wifi.h
- /home/daniele/esp-idf/components/esp_wifi/include/esp_wifi_crypto_types.h
- /home/daniele/esp-idf/components/esp_wifi/include/esp_wifi_default.h
- /home/daniele/esp-idf/components/esp_wifi/include/esp_wifi_types.h
- /home/daniele/esp-idf/components/esp_wifi/include/esp_wifi_types_generic.h
- /home/daniele/esp-idf/components/esp_wifi/include/local/esp_wifi_types_native.h
  /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/FreeRTOS.h
  /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/deprecated_definitions.h
  /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/event_groups.h

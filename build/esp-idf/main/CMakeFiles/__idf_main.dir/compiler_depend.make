@@ -12,9 +12,7 @@ esp-idf/main/CMakeFiles/__idf_main.dir/app_main.c.obj: /home/daniele/esp_hid_tes
   /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/inttypes.h \
   /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/limits.h \
   /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/machine/_default_types.h \
-  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/machine/_endian.h \
   /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/machine/_types.h \
-  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/machine/endian.h \
   /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/machine/ieeefp.h \
   /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/machine/stdlib.h \
   /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/picolibc.h \
@@ -109,10 +107,6 @@ esp-idf/main/CMakeFiles/__idf_main.dir/app_main.c.obj: /home/daniele/esp_hid_tes
   /home/daniele/esp-idf/components/esp_libc/platform_include/sys/cdefs.h \
   /home/daniele/esp-idf/components/esp_libc/platform_include/sys/lock.h \
   /home/daniele/esp-idf/components/esp_libc/platform_include/sys/reent.h \
-  /home/daniele/esp-idf/components/esp_netif/include/esp_netif.h \
-  /home/daniele/esp-idf/components/esp_netif/include/esp_netif_defaults.h \
-  /home/daniele/esp-idf/components/esp_netif/include/esp_netif_ip_addr.h \
-  /home/daniele/esp-idf/components/esp_netif/include/esp_netif_types.h \
   /home/daniele/esp-idf/components/esp_partition/include/esp_partition.h \
   /home/daniele/esp-idf/components/esp_rom/include/esp_rom_gpio.h \
   /home/daniele/esp-idf/components/esp_rom/include/esp_rom_sys.h \
@@ -120,12 +114,6 @@ esp-idf/main/CMakeFiles/__idf_main.dir/app_main.c.obj: /home/daniele/esp_hid_tes
   /home/daniele/esp-idf/components/esp_system/include/esp_system.h \
   /home/daniele/esp-idf/components/esp_system/include/esp_task.h \
   /home/daniele/esp-idf/components/esp_timer/include/esp_timer.h \
-  /home/daniele/esp-idf/components/esp_wifi/include/esp_wifi.h \
-  /home/daniele/esp-idf/components/esp_wifi/include/esp_wifi_crypto_types.h \
-  /home/daniele/esp-idf/components/esp_wifi/include/esp_wifi_default.h \
-  /home/daniele/esp-idf/components/esp_wifi/include/esp_wifi_types.h \
-  /home/daniele/esp-idf/components/esp_wifi/include/esp_wifi_types_generic.h \
-  /home/daniele/esp-idf/components/esp_wifi/include/local/esp_wifi_types_native.h \
   /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/FreeRTOS.h \
   /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/deprecated_definitions.h \
   /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/event_groups.h \
@@ -433,47 +421,25 @@ esp-idf/main/CMakeFiles/__idf_main.dir/input/button.c.obj: /home/daniele/esp_hid
 
 /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos/portmacro.h:
 
-/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos/portbenchmark.h:
+/home/daniele/esp-idf/components/bt/host/nimble/nimble/nimble/transport/include/nimble/transport_impl.h:
 
-/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/timers.h:
-
-/home/daniele/esp-idf/components/nvs_flash/include/nvs.h:
-
-/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/task.h:
-
-/home/daniele/esp_hid_test/main/hid/hid_keyboard.c:
-
-/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/semphr.h:
-
-/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/projdefs.h:
-
-/home/daniele/esp-idf/components/xtensa/include/xtensa_api.h:
-
-/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/portable.h:
-
-/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/message_buffer.h:
-
-/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/list.h:
+/home/daniele/esp-idf/components/bt/host/nimble/nimble/nimble/transport/include/nimble/transport/monitor.h:
 
 /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/sys/string.h:
 
 /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/stdlib.h:
 
-/home/daniele/esp-idf/components/bt/host/nimble/nimble/nimble/transport/include/nimble/transport/monitor.h:
-
 /home/daniele/esp-idf/components/bt/host/nimble/nimble/nimble/include/nimble/nimble_npl.h:
 
 /home/daniele/esp-idf/components/bt/host/nimble/nimble/nimble/include/nimble/hci_common.h:
 
-/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/event_groups.h:
+/home/daniele/esp-idf/components/soc/esp32s3/include/soc/soc_caps.h:
 
-/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/deprecated_definitions.h:
+/home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/sys/_locale.h:
 
 /home/daniele/esp-idf/components/xtensa/include/xtensa_config.h:
 
 /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/alloca.h:
-
-/home/daniele/esp-idf/components/esp_wifi/include/esp_wifi.h:
 
 /home/daniele/esp-idf/components/bt/host/nimble/nimble/nimble/host/include/host/ble_uuid.h:
 
@@ -485,10 +451,6 @@ esp-idf/main/CMakeFiles/__idf_main.dir/input/button.c.obj: /home/daniele/esp_hid
 
 /home/daniele/esp-idf/components/bt/host/nimble/nimble/nimble/host/include/host/ble_sm.h:
 
-/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/queue.h:
-
-/home/daniele/esp-idf/components/bt/host/nimble/nimble/porting/nimble/include/log/log.h:
-
 /home/daniele/esp-idf/components/bt/host/nimble/nimble/nimble/host/include/host/ble_ibeacon.h:
 
 /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/stdio.h:
@@ -498,6 +460,10 @@ esp-idf/main/CMakeFiles/__idf_main.dir/input/button.c.obj: /home/daniele/esp_hid
 /home/daniele/esp-idf/components/bt/host/nimble/nimble/nimble/host/include/host/ble_hs_log.h:
 
 /home/daniele/esp-idf/components/bt/host/nimble/nimble/nimble/host/include/host/ble_gap.h:
+
+/home/daniele/esp-idf/components/xtensa/include/xtensa_api.h:
+
+/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/portable.h:
 
 /home/daniele/esp-idf/components/bt/host/nimble/nimble/nimble/host/include/host/ble_hs_hci.h:
 
@@ -509,17 +475,21 @@ esp-idf/main/CMakeFiles/__idf_main.dir/input/button.c.obj: /home/daniele/esp_hid
 
 /home/daniele/esp-idf/components/bt/host/nimble/nimble/nimble/host/include/host/ble_esp_hs.h:
 
+/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/list.h:
+
 /home/daniele/esp-idf/components/bt/host/nimble/nimble/nimble/host/include/host/ble_esp_gatt.h:
 
-/home/daniele/esp-idf/components/esp_netif/include/esp_netif_types.h:
+/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/projdefs.h:
+
+/home/daniele/esp-idf/components/bt/host/nimble/nimble/nimble/host/include/host/ble_att.h:
 
 /home/daniele/esp-idf/components/esp_partition/include/esp_partition.h:
+
+/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/timers.h:
 
 /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/sys/queue.h:
 
 /home/daniele/esp-idf/components/esp_driver_gpio/include/driver/gpio.h:
-
-/home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/sys/features.h:
 
 /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/limits.h:
 
@@ -532,6 +502,10 @@ esp-idf/main/CMakeFiles/__idf_main.dir/input/button.c.obj: /home/daniele/esp_hid
 /home/daniele/esp-idf/components/esp_libc/platform_include/stdio.h:
 
 /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/machine/stdlib.h:
+
+/home/daniele/esp-idf/components/esp_system/include/esp_private/crosscore_int.h:
+
+/home/daniele/esp-idf/components/bt/host/nimble/nimble/porting/nimble/include/modlog/modlog.h:
 
 /home/daniele/esp-idf/components/bt/host/nimble/nimble/nimble/include/nimble/nimble_opt_auto.h:
 
@@ -567,13 +541,19 @@ esp-idf/main/CMakeFiles/__idf_main.dir/input/button.c.obj: /home/daniele/esp_hid
 
 /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/lib/gcc/xtensa-esp-elf/15.2.0/include/float.h:
 
-/home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/machine/_endian.h:
+/home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/lib/gcc/xtensa-esp-elf/15.2.0/include/stdbool.h:
+
+/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/stream_buffer.h:
 
 /home/daniele/esp-idf/components/bt/host/nimble/nimble/nimble/host/include/host/ble_l2cap.h:
 
 /home/daniele/esp-idf/components/bt/host/nimble/nimble/porting/npl/freertos/include/nimble/nimble_npl_os.h:
 
 /home/daniele/esp-idf/components/esp_libc/platform_include/sys/cdefs.h:
+
+/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/deprecated_definitions.h:
+
+/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/event_groups.h:
 
 /home/daniele/esp-idf/components/esp_hal_gpio/include/hal/gpio_types.h:
 
@@ -589,35 +569,17 @@ config/sdkconfig.h:
 
 /home/daniele/esp-idf/components/bt/host/nimble/nimble/porting/npl/freertos/include/nimble/nimble_port_freertos.h:
 
-/home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/picolibc.h:
-
 /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/string.h:
 
-/home/daniele/esp-idf/components/bt/host/nimble/nimble/nimble/host/include/host/ble_att.h:
-
-/home/daniele/esp-idf/components/esp_netif/include/esp_netif_ip_addr.h:
-
-/home/daniele/esp-idf/components/esp_wifi/include/local/esp_wifi_types_native.h:
-
-/home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/machine/endian.h:
-
-/home/daniele/esp-idf/components/esp_hw_support/include/esp_cpu.h:
-
-/home/daniele/esp-idf/components/bt/host/nimble/nimble/nimble/host/include/host/ble_hs_stop.h:
+/home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/sys/features.h:
 
 /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/sys/config.h:
 
-/home/daniele/esp-idf/components/bt/host/nimble/nimble/nimble/transport/include/nimble/transport_impl.h:
+/home/daniele/esp-idf/components/bt/host/nimble/nimble/nimble/host/include/host/ble_hs_stop.h:
 
-/home/daniele/esp-idf/components/bt/host/nimble/nimble/porting/nimble/include/modlog/modlog.h:
+/home/daniele/esp-idf/components/esp_hw_support/include/esp_cpu.h:
 
-/home/daniele/esp-idf/components/esp_system/include/esp_private/crosscore_int.h:
-
-/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/mpu_wrappers.h:
-
-/home/daniele/esp-idf/components/bt/host/nimble/nimble/nimble/host/include/host/ble_hs_id.h:
-
-/home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/sys/cdefs.h:
+/home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/picolibc.h:
 
 /home/daniele/esp-idf/components/soc/esp32s3/register/soc/reg_base.h:
 
@@ -630,12 +592,6 @@ config/sdkconfig.h:
 /home/daniele/esp-idf/components/esp_event/include/esp_event_base.h:
 
 /home/daniele/esp-idf/components/bt/host/nimble/nimble/porting/nimble/include/logcfg/logcfg.h:
-
-/home/daniele/esp-idf/components/soc/esp32s3/include/soc/soc_caps.h:
-
-/home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/sys/_locale.h:
-
-/home/daniele/esp-idf/components/esp_wifi/include/esp_wifi_crypto_types.h:
 
 /home/daniele/esp-idf/components/bt/host/nimble/nimble/porting/nimble/include/nimble/nimble_port.h:
 
@@ -657,17 +613,17 @@ config/sdkconfig.h:
 
 /home/daniele/esp-idf/components/bt/host/nimble/nimble/porting/nimble/include/os/os_mbuf.h:
 
-/home/daniele/esp-idf/components/esp_wifi/include/esp_wifi_types_generic.h:
-
 /home/daniele/esp-idf/components/bt/host/nimble/nimble/porting/nimble/include/os/os_mempool.h:
 
 /home/daniele/esp-idf/components/bt/host/nimble/nimble/porting/nimble/include/os/queue.h:
 
+/home/daniele/esp-idf/components/nvs_flash/include/nvs.h:
+
+/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/task.h:
+
 /home/daniele/esp-idf/components/bt/host/nimble/nimble/porting/nimble/include/syscfg/syscfg.h:
 
 /home/daniele/esp-idf/components/bt/host/nimble/port/include/esp_nimble_cfg.h:
-
-/home/daniele/esp-idf/components/esp_netif/include/esp_netif_defaults.h:
 
 /home/daniele/esp-idf/components/esp_hw_support/include/esp_intr_alloc.h:
 
@@ -713,8 +669,6 @@ config/sdkconfig.h:
 
 /home/daniele/esp-idf/components/esp_hw_support/include/esp_intr_types.h:
 
-/home/daniele/esp-idf/components/esp_netif/include/esp_netif.h:
-
 /home/daniele/esp-idf/components/esp_hw_support/include/esp_memory_utils.h:
 
 /home/daniele/esp-idf/components/esp_libc/platform_include/esp_newlib.h:
@@ -735,10 +689,20 @@ config/sdkconfig.h:
 
 /home/daniele/esp-idf/components/esp_system/include/esp_system.h:
 
-/home/daniele/esp-idf/components/esp_wifi/include/esp_wifi_default.h:
+/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/message_buffer.h:
 
-/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/stream_buffer.h:
+/home/daniele/esp-idf/components/bt/host/nimble/nimble/nimble/host/include/host/ble_hs_id.h:
 
-/home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/lib/gcc/xtensa-esp-elf/15.2.0/include/stdbool.h:
+/home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/sys/cdefs.h:
 
-/home/daniele/esp-idf/components/esp_wifi/include/esp_wifi_types.h:
+/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/mpu_wrappers.h:
+
+/home/daniele/esp-idf/components/bt/host/nimble/nimble/porting/nimble/include/log/log.h:
+
+/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/queue.h:
+
+/home/daniele/esp_hid_test/main/hid/hid_keyboard.c:
+
+/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/semphr.h:
+
+/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos/portbenchmark.h:

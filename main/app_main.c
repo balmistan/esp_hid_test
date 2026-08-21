@@ -8,14 +8,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <inttypes.h>
+#include <stdbool.h>
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "freertos/event_groups.h"
 
 #include "esp_system.h"
-#include "esp_wifi.h"
-#include "esp_event.h"
 #include "esp_log.h"
 #include "nvs_flash.h"
 
@@ -27,27 +25,26 @@
 #include "nimble/nimble_port.h"
 #include "nimble/nimble_port_freertos.h"
 
-#else
-
-#include "esp_bt_defs.h"
-
-#if CONFIG_BT_BLE_ENABLED
-#include "esp_gap_ble_api.h"
-#include "esp_gatts_api.h"
-#include "esp_gatt_defs.h"
-#endif
-
-#include "esp_bt_main.h"
-#include "esp_bt_device.h"
-
 #endif
 
 #include "esp_hidd.h"
 #include "esp_hid_gap.h"
 
 
+/*
+ * ============================================================
+ * GLOBAL
+ * ============================================================
+ */
+
 static const char *TAG = "HID_DEV_DEMO";
 
+
+/*
+ * ============================================================
+ * LOCAL HID PARAMETERS
+ * ============================================================
+ */
 
 typedef struct
 {
@@ -163,7 +160,7 @@ const unsigned char mediaReportMap[] = {
 
 /*
  * ============================================================
- * MOUSE REPORT MAP
+ * MOUSE
  * ============================================================
  */
 
@@ -221,7 +218,11 @@ const unsigned char mouseReportMap[] = {
  * ============================================================
  */
 
-void send_mouse(uint8_t buttons, char dx, char dy, char wheel)
+void send_mouse(
+    uint8_t buttons,
+    char dx,
+    char dy,
+    char wheel)
 {
     static uint8_t buffer[4] = {0};
 
@@ -298,7 +299,9 @@ void ble_hid_demo_task_mouse(void *pvParameters)
             break;
         }
 
-        vTaskDelay(10 / portTICK_PERIOD_MS);
+        vTaskDelay(
+            10 / portTICK_PERIOD_MS
+        );
     }
 }
 
@@ -341,8 +344,8 @@ void ble_hid_demo_task_mouse(void *pvParameters)
 #define USB_HID_SPACE                   0x2C
 #define USB_HID_DOT                     0x37
 #define USB_HID_NEWLINE                 0x28
-#define USB_HID_FSLASH                 0x38
-#define USB_HID_BSLASH                 0x31
+#define USB_HID_FSLASH                  0x38
+#define USB_HID_BSLASH                  0x31
 #define USB_HID_COMMA                   0x36
 
 
@@ -416,7 +419,9 @@ const unsigned char keyboardReportMap[] = {
  * ============================================================
  */
 
-static void char_to_code(uint8_t *buffer, char ch)
+static void char_to_code(
+    uint8_t *buffer,
+    char ch)
 {
     if (ch >= 'a' && ch <= 'z') {
 
@@ -424,7 +429,6 @@ static void char_to_code(uint8_t *buffer, char ch)
 
         buffer[2] =
             (uint8_t)(4 + (ch - 'a'));
-
     }
 
     else if (ch >= 'A' && ch <= 'Z') {
@@ -432,7 +436,8 @@ static void char_to_code(uint8_t *buffer, char ch)
         buffer[0] =
             USB_HID_MODIFIER_LEFT_SHIFT;
 
-        ch = ch - ('A' - 'a');
+        ch =
+            ch - ('A' - 'a');
 
         buffer[2] =
             (uint8_t)(4 + (ch - 'a'));
@@ -550,6 +555,7 @@ void send_keyboard(char c)
         8
     );
 
+
     /*
      * Key release
      */
@@ -579,14 +585,12 @@ void send_keyboard(char c)
  * GPIO BUTTON
  * ============================================================
  *
- * Pulsante:
+ * GPIO4 ---- BUTTON ---- GND
  *
- * GPIO4 ---- pulsante ---- GND
+ * GPIO4 = HIGH -> not pressed
+ * GPIO4 = LOW  -> pressed
  *
- * GPIO4 = HIGH -> non premuto
- * GPIO4 = LOW  -> premuto
- *
- * Viene utilizzato il pull-up interno.
+ * Internal pull-up is used.
  */
 
 #define BUTTON_GPIO GPIO_NUM_4
@@ -599,11 +603,13 @@ void ble_hid_demo_task_kbd(void *pvParameters)
         "KEYBOARD TASK AVVIATO"
     );
 
+
     /*
-     * Configurazione GPIO4
+     * Configure GPIO4
      */
 
     gpio_config_t io_conf = {
+
         .pin_bit_mask =
             (1ULL << BUTTON_GPIO),
 
@@ -620,9 +626,11 @@ void ble_hid_demo_task_kbd(void *pvParameters)
             GPIO_INTR_DISABLE
     };
 
+
     ESP_ERROR_CHECK(
         gpio_config(&io_conf)
     );
+
 
     ESP_LOGI(
         TAG,
@@ -631,10 +639,10 @@ void ble_hid_demo_task_kbd(void *pvParameters)
 
 
     /*
-     * Stato iniziale:
+     * Initial state:
      *
-     * 1 = non premuto
-     * 0 = premuto
+     * 1 = not pressed
+     * 0 = pressed
      */
 
     int last_state = 1;
@@ -658,11 +666,11 @@ void ble_hid_demo_task_kbd(void *pvParameters)
 
 
         /*
-         * Rileviamo solamente il fronte:
+         * Detect only the falling edge:
          *
          * HIGH -> LOW
          *
-         * cioè la pressione del pulsante.
+         * This corresponds to a button press.
          */
 
         if (state == 0 &&
@@ -690,7 +698,7 @@ void ble_hid_demo_task_kbd(void *pvParameters)
 
 
         /*
-         * Frequenza di polling:
+         * Polling interval:
          * 10 ms
          */
 
@@ -711,7 +719,8 @@ void ble_hid_demo_task_kbd(void *pvParameters)
 
 static esp_hid_raw_report_map_t ble_report_maps[] = {
 
-#if !CONFIG_BT_NIMBLE_ENABLED || CONFIG_EXAMPLE_HID_DEVICE_ROLE == 1
+#if !CONFIG_BT_NIMBLE_ENABLED || \
+    CONFIG_EXAMPLE_HID_DEVICE_ROLE == 1
 
     {
         .data = mediaReportMap,
@@ -885,122 +894,180 @@ void esp_hidd_send_consumer_value(
     uint8_t key_cmd,
     bool key_pressed)
 {
-    uint8_t buffer[HID_CC_IN_RPT_LEN] = {0, 0};
+    uint8_t buffer[HID_CC_IN_RPT_LEN] = {
+        0,
+        0
+    };
+
 
     if (key_pressed) {
 
         switch (key_cmd) {
 
         case HID_CONSUMER_CHANNEL_UP:
+
             HID_CC_RPT_SET_CHANNEL(
                 buffer,
                 HID_CC_RPT_CHANNEL_UP
             );
+
             break;
 
+
         case HID_CONSUMER_CHANNEL_DOWN:
+
             HID_CC_RPT_SET_CHANNEL(
                 buffer,
                 HID_CC_RPT_CHANNEL_DOWN
             );
+
             break;
+
 
         case HID_CONSUMER_VOLUME_UP:
-            HID_CC_RPT_SET_VOLUME_UP(buffer);
+
+            HID_CC_RPT_SET_VOLUME_UP(
+                buffer
+            );
+
             break;
+
 
         case HID_CONSUMER_VOLUME_DOWN:
-            HID_CC_RPT_SET_VOLUME_DOWN(buffer);
+
+            HID_CC_RPT_SET_VOLUME_DOWN(
+                buffer
+            );
+
             break;
 
+
         case HID_CONSUMER_MUTE:
+
             HID_CC_RPT_SET_BUTTON(
                 buffer,
                 HID_CC_RPT_MUTE
             );
+
             break;
 
+
         case HID_CONSUMER_POWER:
+
             HID_CC_RPT_SET_BUTTON(
                 buffer,
                 HID_CC_RPT_POWER
             );
+
             break;
 
+
         case HID_CONSUMER_RECALL_LAST:
+
             HID_CC_RPT_SET_BUTTON(
                 buffer,
                 HID_CC_RPT_LAST
             );
+
             break;
 
+
         case HID_CONSUMER_ASSIGN_SEL:
+
             HID_CC_RPT_SET_BUTTON(
                 buffer,
                 HID_CC_RPT_ASSIGN_SEL
             );
+
             break;
 
+
         case HID_CONSUMER_PLAY:
+
             HID_CC_RPT_SET_BUTTON(
                 buffer,
                 HID_CC_RPT_PLAY
             );
+
             break;
 
+
         case HID_CONSUMER_PAUSE:
+
             HID_CC_RPT_SET_BUTTON(
                 buffer,
                 HID_CC_RPT_PAUSE
             );
+
             break;
 
+
         case HID_CONSUMER_RECORD:
+
             HID_CC_RPT_SET_BUTTON(
                 buffer,
                 HID_CC_RPT_RECORD
             );
+
             break;
 
+
         case HID_CONSUMER_FAST_FORWARD:
+
             HID_CC_RPT_SET_BUTTON(
                 buffer,
                 HID_CC_RPT_FAST_FWD
             );
+
             break;
 
+
         case HID_CONSUMER_REWIND:
+
             HID_CC_RPT_SET_BUTTON(
                 buffer,
                 HID_CC_RPT_REWIND
             );
+
             break;
 
+
         case HID_CONSUMER_SCAN_NEXT_TRK:
+
             HID_CC_RPT_SET_BUTTON(
                 buffer,
                 HID_CC_RPT_SCAN_NEXT_TRK
             );
+
             break;
 
+
         case HID_CONSUMER_SCAN_PREV_TRK:
+
             HID_CC_RPT_SET_BUTTON(
                 buffer,
                 HID_CC_RPT_SCAN_PREV_TRK
             );
+
             break;
 
+
         case HID_CONSUMER_STOP:
+
             HID_CC_RPT_SET_BUTTON(
                 buffer,
                 HID_CC_RPT_STOP
             );
+
             break;
 
+
         default:
+
             break;
         }
     }
+
 
     esp_hidd_dev_input_set(
         s_ble_hid_param.hid_dev,
@@ -1024,18 +1091,8 @@ void ble_hid_task_start_up(void)
         return;
     }
 
-#if !CONFIG_BT_NIMBLE_ENABLED
 
-    xTaskCreate(
-        ble_hid_demo_task,
-        "ble_hid_demo_task",
-        2 * 1024,
-        NULL,
-        configMAX_PRIORITIES - 3,
-        &s_ble_hid_param.task_hdl
-    );
-
-#elif CONFIG_EXAMPLE_HID_DEVICE_ROLE == 1
+#if CONFIG_EXAMPLE_HID_DEVICE_ROLE == 1
 
     xTaskCreate(
         ble_hid_demo_task,
@@ -1045,6 +1102,7 @@ void ble_hid_task_start_up(void)
         configMAX_PRIORITIES - 3,
         &s_ble_hid_param.task_hdl
     );
+
 
 #elif CONFIG_EXAMPLE_HID_DEVICE_ROLE == 2
 
@@ -1056,6 +1114,7 @@ void ble_hid_task_start_up(void)
         configMAX_PRIORITIES - 3,
         &s_ble_hid_param.task_hdl
     );
+
 
 #elif CONFIG_EXAMPLE_HID_DEVICE_ROLE == 3
 
@@ -1111,7 +1170,10 @@ static void ble_hidd_event_callback(
 
     case ESP_HIDD_START_EVENT:
 
-        ESP_LOGI(TAG, "START");
+        ESP_LOGI(
+            TAG,
+            "START"
+        );
 
         esp_hid_ble_gap_adv_start();
 
@@ -1120,7 +1182,10 @@ static void ble_hidd_event_callback(
 
     case ESP_HIDD_CONNECT_EVENT:
 
-        ESP_LOGI(TAG, "CONNECT");
+        ESP_LOGI(
+            TAG,
+            "CONNECT"
+        );
 
         break;
 
@@ -1150,6 +1215,7 @@ static void ble_hidd_event_callback(
                 : ""
         );
 
+
         if (param->control.control) {
 
             ble_hid_task_start_up();
@@ -1168,10 +1234,13 @@ static void ble_hidd_event_callback(
             TAG,
             "OUTPUT[%u]: %8s ID: %2u, Len: %d, Data:",
             param->output.map_index,
-            esp_hid_usage_str(param->output.usage),
+            esp_hid_usage_str(
+                param->output.usage
+            ),
             param->output.report_id,
             param->output.length
         );
+
 
         ESP_LOG_BUFFER_HEX(
             TAG,
@@ -1188,10 +1257,13 @@ static void ble_hidd_event_callback(
             TAG,
             "FEATURE[%u]: %8s ID: %2u, Len: %d, Data:",
             param->feature.map_index,
-            esp_hid_usage_str(param->feature.usage),
+            esp_hid_usage_str(
+                param->feature.usage
+            ),
             param->feature.report_id,
             param->feature.length
         );
+
 
         ESP_LOG_BUFFER_HEX(
             TAG,
@@ -1215,6 +1287,7 @@ static void ble_hidd_event_callback(
             )
         );
 
+
         ble_hid_task_shut_down();
 
         esp_hid_ble_gap_adv_start();
@@ -1224,7 +1297,10 @@ static void ble_hidd_event_callback(
 
     case ESP_HIDD_STOP_EVENT:
 
-        ESP_LOGI(TAG, "STOP");
+        ESP_LOGI(
+            TAG,
+            "STOP"
+        );
 
         break;
 
@@ -1253,6 +1329,7 @@ void ble_hid_device_host_task(void *param)
         TAG,
         "BLE Host Task Started"
     );
+
 
     /*
      * This function returns only when
@@ -1285,7 +1362,7 @@ void app_main(void)
 
     ESP_LOGE(
         TAG,
-        "Please turn on BT HID device or BLE!"
+        "Please turn on BLE HID!"
     );
 
     return;
@@ -1299,7 +1376,9 @@ void app_main(void)
      * ========================================================
      */
 
-    ret = nvs_flash_init();
+    ret =
+        nvs_flash_init();
+
 
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES ||
         ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
@@ -1308,8 +1387,10 @@ void app_main(void)
             nvs_flash_erase()
         );
 
-        ret = nvs_flash_init();
+        ret =
+            nvs_flash_init();
     }
+
 
     ESP_ERROR_CHECK(ret);
 
@@ -1326,8 +1407,12 @@ void app_main(void)
         HID_DEV_MODE
     );
 
+
     ret =
-        esp_hid_gap_init(HID_DEV_MODE);
+        esp_hid_gap_init(
+            HID_DEV_MODE
+        );
+
 
     ESP_ERROR_CHECK(ret);
 
@@ -1366,6 +1451,7 @@ void app_main(void)
         );
 
 #endif
+
 
     ESP_ERROR_CHECK(ret);
 
@@ -1416,6 +1502,7 @@ void app_main(void)
      */
 
     ble_store_config_init();
+
 
     ble_hs_cfg.store_status_cb =
         ble_store_util_status_rr;
