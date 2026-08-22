@@ -1,6 +1,9 @@
-esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keyboard.c.obj: \
- /home/daniele/esp_hid_test/main/hid/hid_keyboard.c \
- /home/daniele/esp_hid_test/main/hid/hid_keyboard.h \
+esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_buttons.c.obj: \
+ /home/daniele/esp_hid_test/main/hid/hid_buttons.c \
+ /home/daniele/esp_hid_test/main/hid/hid_buttons.h \
+ /home/daniele/esp-idf/components/esp_hid/include/esp_hidd.h \
+ /home/daniele/esp_hid_test/build/config/sdkconfig.h \
+ /home/daniele/esp-idf/components/esp_common/include/esp_err.h \
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/stdint.h \
  /home/daniele/esp-idf/components/esp_libc/platform_include/sys/cdefs.h \
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/sys/cdefs.h \
@@ -10,12 +13,9 @@ esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keyboard.c.obj: \
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/picolibc.h \
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/lib/gcc/xtensa-esp-elf/15.2.0/include/float.h \
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/machine/_default_types.h \
- /home/daniele/esp_hid_test/build/config/sdkconfig.h \
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/lib/gcc/xtensa-esp-elf/15.2.0/include/stddef.h \
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/sys/_intsup.h \
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/sys/_stdint.h \
- /home/daniele/esp-idf/components/esp_hid/include/esp_hidd.h \
- /home/daniele/esp-idf/components/esp_common/include/esp_err.h \
  /home/daniele/esp-idf/components/esp_libc/platform_include/stdio.h \
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/stdio.h \
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/lib/gcc/xtensa-esp-elf/15.2.0/include/stdarg.h \
@@ -103,9 +103,13 @@ esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keyboard.c.obj: \
  /home/daniele/esp-idf/components/esp_event/include/esp_event_base.h \
  /home/daniele/esp-idf/components/esp_hid/include/esp_hid_common.h \
  /home/daniele/esp-idf/components/esp_hid/include/esp_hidd_transport.h \
- /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/string.h \
- /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/strings.h \
- /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/sys/string.h \
+ /home/daniele/esp-idf/components/esp_driver_gpio/include/driver/gpio.h \
+ /home/daniele/esp-idf/components/esp_hal_gpio/include/hal/gpio_types.h \
+ /home/daniele/esp-idf/components/esp_hal_gpio/esp32s3/include/soc/gpio_num.h \
+ /home/daniele/esp-idf/components/esp_rom/include/esp_rom_gpio.h \
+ /home/daniele/esp-idf/components/soc/esp32s3/include/soc/gpio_pins.h \
+ /home/daniele/esp-idf/components/esp_driver_gpio/include/driver/gpio_etm.h \
+ /home/daniele/esp-idf/components/esp_hw_support/etm/include/esp_etm.h \
  /home/daniele/esp-idf/components/log/include/esp_log.h \
  /home/daniele/esp-idf/components/log/include/esp_log_config.h \
  /home/daniele/esp-idf/components/log/include/esp_log_level.h \
@@ -115,5 +119,11 @@ esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keyboard.c.obj: \
  /home/daniele/esp-idf/components/log/include/esp_log_write.h \
  /home/daniele/esp-idf/components/log/include/esp_log_format.h \
  /home/daniele/esp-idf/components/log/include/esp_log_args.h \
+ /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/string.h \
+ /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/strings.h \
+ /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/sys/string.h \
  /home/daniele/esp-idf/components/log/include/esp_log_attr.h \
- /home/daniele/esp-idf/components/log/include/esp_private/log_attr.h
+ /home/daniele/esp-idf/components/log/include/esp_private/log_attr.h \
+ /home/daniele/esp_hid_test/main/hid/hid_keymap.h \
+ /home/daniele/esp_hid_test/main/hid/hid_keyboard.h \
+ /home/daniele/esp_hid_test/main/hid/hid_mouse.h

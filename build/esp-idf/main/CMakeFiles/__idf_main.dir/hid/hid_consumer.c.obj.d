@@ -1,6 +1,6 @@
-esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keyboard.c.obj: \
- /home/daniele/esp_hid_test/main/hid/hid_keyboard.c \
- /home/daniele/esp_hid_test/main/hid/hid_keyboard.h \
+esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_consumer.c.obj: \
+ /home/daniele/esp_hid_test/main/hid/hid_consumer.c \
+ /home/daniele/esp_hid_test/main/hid/hid_consumer.h \
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/stdint.h \
  /home/daniele/esp-idf/components/esp_libc/platform_include/sys/cdefs.h \
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/sys/cdefs.h \
@@ -14,6 +14,7 @@ esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keyboard.c.obj: \
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/lib/gcc/xtensa-esp-elf/15.2.0/include/stddef.h \
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/sys/_intsup.h \
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/sys/_stdint.h \
+ /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/lib/gcc/xtensa-esp-elf/15.2.0/include/stdbool.h \
  /home/daniele/esp-idf/components/esp_hid/include/esp_hidd.h \
  /home/daniele/esp-idf/components/esp_common/include/esp_err.h \
  /home/daniele/esp-idf/components/esp_libc/platform_include/stdio.h \
@@ -51,7 +52,6 @@ esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keyboard.c.obj: \
  /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/portable.h \
  /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/deprecated_definitions.h \
  /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos/portmacro.h \
- /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/lib/gcc/xtensa-esp-elf/15.2.0/include/stdbool.h \
  /home/daniele/esp-idf/components/xtensa/include/xtensa/xtruntime.h \
  /home/daniele/esp-idf/components/xtensa/esp32s3/include/xtensa/config/xt_specreg.h \
  /home/daniele/esp-idf/components/xtensa/include/xtensa/xtruntime-core-state.h \
@@ -102,18 +102,4 @@ esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keyboard.c.obj: \
  /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/timers.h \
  /home/daniele/esp-idf/components/esp_event/include/esp_event_base.h \
  /home/daniele/esp-idf/components/esp_hid/include/esp_hid_common.h \
- /home/daniele/esp-idf/components/esp_hid/include/esp_hidd_transport.h \
- /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/string.h \
- /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/strings.h \
- /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/sys/string.h \
- /home/daniele/esp-idf/components/log/include/esp_log.h \
- /home/daniele/esp-idf/components/log/include/esp_log_config.h \
- /home/daniele/esp-idf/components/log/include/esp_log_level.h \
- /home/daniele/esp-idf/components/log/include/esp_log_color.h \
- /home/daniele/esp-idf/components/log/include/esp_log_buffer.h \
- /home/daniele/esp-idf/components/log/include/esp_log_timestamp.h \
- /home/daniele/esp-idf/components/log/include/esp_log_write.h \
- /home/daniele/esp-idf/components/log/include/esp_log_format.h \
- /home/daniele/esp-idf/components/log/include/esp_log_args.h \
- /home/daniele/esp-idf/components/log/include/esp_log_attr.h \
- /home/daniele/esp-idf/components/log/include/esp_private/log_attr.h
+ /home/daniele/esp-idf/components/esp_hid/include/esp_hidd_transport.h

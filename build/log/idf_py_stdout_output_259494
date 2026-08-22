@@ -1,16 +1,16 @@
 Command: make -j 10 all
-[  1%] Built target custom_bundle
-[  1%] Built target sections_ld_in_preprocess
+[  0%] Built target _project_elf_src
+[  0%] Built target sections_ld_in_preprocess
+[  0%] Built target memory_ld_in_preprocess
 [  1%] Built target partition_table_bin
-[  1%] Built target _project_elf_src
-[  1%] Built target memory_ld_in_preprocess
+[  1%] Built target custom_bundle
 [  1%] Performing build step for 'bootloader'
 [  2%] Built target __idf_esp_gdbstub
 [  3%] Built target __idf_esp_wifi
 [  1%] Built target bootloader_ld_in_preprocess
-[  8%] Built target __idf_log
-[  8%] Built target _project_elf_src
+[  2%] Built target _project_elf_src
 [  3%] Built target __idf_esp_coex
+[  8%] Built target __idf_log
 [ 15%] Built target __idf_esp_rom
 [ 16%] Built target __idf_esp_common
 [ 12%] Built target __idf_wpa_supplicant
@@ -35,16 +35,16 @@ Command: make -j 10 all
 [ 64%] Built target __idf_esp_hal_timg
 [ 65%] Built target __idf_esp_bootloader_format
 [ 28%] Built target __idf_nvs_flash
-[ 66%] Built target __idf_spi_flash
 [ 28%] Built target __idf_nvs_sec_provider
-[ 68%] Built target __idf_esp_hal_mspi
+[ 66%] Built target __idf_spi_flash
 [ 29%] Built target __idf_esp_event
-[ 69%] Built target __idf_esp_hal_clock
+[ 68%] Built target __idf_esp_hal_mspi
 [ 31%] Built target __idf_log
-[ 73%] Built target __idf_esp_hal_gpspi
+[ 69%] Built target __idf_esp_hal_clock
 [ 31%] Built target __idf_cxx
-[ 75%] Built target __idf_esp_hal_dma
+[ 73%] Built target __idf_esp_hal_gpspi
 [ 32%] Built target __idf_pthread
+[ 75%] Built target __idf_esp_hal_dma
 [ 77%] Built target __idf_micro-ecc
 [ 34%] Built target __idf_esp_libc
 [ 78%] Built target __idf_esp_hal_pmu
@@ -52,31 +52,31 @@ Command: make -j 10 all
 [ 81%] Built target __idf_esp_hal_usb
 [ 86%] Built target __idf_esp_hal_gpio
 [ 42%] Built target __idf_esp_hw_support
-[ 90%] Built target __idf_hal
 [ 42%] Built target __idf_esp_hal_touch_sens
-[ 94%] Built target __idf_soc
+[ 90%] Built target __idf_hal
 [ 42%] Built target __idf_esp_hal_pmu
-[ 96%] Built target __idf_xtensa
+[ 94%] Built target __idf_soc
 [ 42%] Built target __idf_esp_hal_usb
-[ 97%] Built target __idf_main
+[ 96%] Built target __idf_xtensa
 [ 43%] Built target __idf_esp_hal_gpio
+[ 97%] Built target __idf_main
 [ 98%] Built target bootloader.elf
 [ 44%] Built target __idf_soc
 [100%] Built target gen_bootloader_binary
-[100%] Built target gen_project_binary
 [ 44%] Built target __idf_heap
+[100%] Built target gen_project_binary
 [ 45%] Built target __idf_hal
 [ 46%] Built target __idf_esp_rom
 Bootloader binary size 0x5240 bytes. 0x2dc0 bytes (36%) free.
-[100%] Built target bootloader_check_size
 [ 47%] Built target __idf_esp_common
+[100%] Built target bootloader_check_size
 [100%] Built target app
 [ 51%] Built target __idf_esp_system
 [ 51%] No install step for 'bootloader'
-[ 51%] Completed 'bootloader'
 [ 53%] Built target __idf_spi_flash
-[ 54%] Built target bootloader
-[ 56%] Built target __idf_bootloader_support
+[ 53%] Completed 'bootloader'
+[ 55%] Built target __idf_bootloader_support
+[ 56%] Built target bootloader
 [ 56%] Built target __idf_esp_hal_ana_conv
 [ 57%] Built target __idf_esp_hal_wdt
 [ 61%] Built target tfpsacrypto
@@ -110,11 +110,21 @@ Bootloader binary size 0x5240 bytes. 0x2dc0 bytes (36%) free.
 [ 86%] Built target __idf_esp_driver_spi
 [ 99%] Built target __idf_bt
 [ 99%] Built target __idf_esp_hid
+[ 99%] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_buttons.c.obj
+[ 99%] Linking C static library libmain.a
 [100%] Built target __idf_main
+[100%] Generating esp-idf/esp_system/ld/sections.ld
 [100%] Built target __ldgen_output_sections.ld
+[100%] Linking CXX executable esp_hid_device.elf
 [100%] Built target esp_hid_device.elf
+[100%] Generating binary image from built executable
+esptool v5.2.0
+Creating ESP32-S3 image...
+Merged 3 ELF sections.
+Successfully created ESP32-S3 image.
+Generated /home/daniele/esp_hid_test/build/esp_hid_device.bin
 [100%] Built target gen_esp_hid_device_binary
 [100%] Built target gen_project_binary
-esp_hid_device.bin binary size 0x89830 bytes. Smallest app partition is 0x177000 bytes. 0xed7d0 bytes (63%) free.
+esp_hid_device.bin binary size 0x89b80 bytes. Smallest app partition is 0x177000 bytes. 0xed480 bytes (63%) free.
 [100%] Built target app_check_size
 [100%] Built target app

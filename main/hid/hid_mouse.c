@@ -5,7 +5,6 @@
 
 #include "esp_hidd.h"
 
-#include "hid/hid_keyboard.h"
 #include "hid/hid_mouse.h"
 
 
@@ -13,6 +12,13 @@
  * ============================================================
  * MOUSE REPORT MAP
  * ============================================================
+ *
+ * This report is used as:
+ *
+ * Report ID 2 = Mouse
+ *
+ * The combined keyboard + mouse report map is defined
+ * separately in hid_report_map.h.
  */
 
 const unsigned char mouseReportMap[] = {
@@ -65,6 +71,18 @@ const unsigned char mouseReportMap[] = {
  * ============================================================
  * SEND MOUSE REPORT
  * ============================================================
+ *
+ * Combined HID device:
+ *
+ * Report ID 1 = Keyboard
+ * Report ID 2 = Mouse
+ *
+ * Mouse report:
+ *
+ * byte 0 = buttons
+ * byte 1 = X
+ * byte 2 = Y
+ * byte 3 = wheel
  */
 
 void hid_mouse_send(
@@ -81,10 +99,17 @@ void hid_mouse_send(
         (uint8_t)wheel
     };
 
+
+    /*
+     * Send mouse report.
+     *
+     * map_index = 0
+     * report_id = 2
+     */
     esp_hidd_dev_input_set(
         hid_dev,
         0,
-        0,
+        2,
         buffer,
         sizeof(buffer)
     );
@@ -95,6 +120,12 @@ void hid_mouse_send(
  * ============================================================
  * MOUSE DEMO TASK
  * ============================================================
+ *
+ * This task is used when the device is configured as
+ * mouse-only (ROLE == 3).
+ *
+ * In the combined keyboard + mouse configuration,
+ * physical buttons are handled by hid_buttons.c.
  */
 
 void hid_mouse_task(void *pvParameters)
@@ -118,7 +149,10 @@ void hid_mouse_task(void *pvParameters)
         "########################################################################\n";
 
 
-    printf("%s\n", help_string);
+    printf(
+        "%s\n",
+        help_string
+    );
 
 
     char c;
@@ -128,9 +162,20 @@ void hid_mouse_task(void *pvParameters)
 
         c = fgetc(stdin);
 
+
         switch (c) {
 
+        /*
+         * ----------------------------------------------------
+         * LEFT CLICK
+         * ----------------------------------------------------
+         */
+
         case 'q':
+
+            /*
+             * Button 1 pressed.
+             */
             hid_mouse_send(
                 hid_dev,
                 1,
@@ -138,10 +183,35 @@ void hid_mouse_task(void *pvParameters)
                 0,
                 0
             );
+
+
+            /*
+             * Button 1 released.
+             */
+            vTaskDelay(
+                pdMS_TO_TICKS(30)
+            );
+
+
+            hid_mouse_send(
+                hid_dev,
+                0,
+                0,
+                0,
+                0
+            );
+
             break;
 
 
+        /*
+         * ----------------------------------------------------
+         * MOVE UP
+         * ----------------------------------------------------
+         */
+
         case 'w':
+
             hid_mouse_send(
                 hid_dev,
                 0,
@@ -149,10 +219,21 @@ void hid_mouse_task(void *pvParameters)
                 -10,
                 0
             );
+
             break;
 
 
+        /*
+         * ----------------------------------------------------
+         * RIGHT CLICK
+         * ----------------------------------------------------
+         */
+
         case 'e':
+
+            /*
+             * Button 2 pressed.
+             */
             hid_mouse_send(
                 hid_dev,
                 2,
@@ -160,10 +241,35 @@ void hid_mouse_task(void *pvParameters)
                 0,
                 0
             );
+
+
+            /*
+             * Button 2 released.
+             */
+            vTaskDelay(
+                pdMS_TO_TICKS(30)
+            );
+
+
+            hid_mouse_send(
+                hid_dev,
+                0,
+                0,
+                0,
+                0
+            );
+
             break;
 
 
+        /*
+         * ----------------------------------------------------
+         * MOVE LEFT
+         * ----------------------------------------------------
+         */
+
         case 'a':
+
             hid_mouse_send(
                 hid_dev,
                 0,
@@ -171,10 +277,18 @@ void hid_mouse_task(void *pvParameters)
                 0,
                 0
             );
+
             break;
 
+
+        /*
+         * ----------------------------------------------------
+         * MOVE DOWN
+         * ----------------------------------------------------
+         */
 
         case 's':
+
             hid_mouse_send(
                 hid_dev,
                 0,
@@ -182,10 +296,18 @@ void hid_mouse_task(void *pvParameters)
                 10,
                 0
             );
+
             break;
 
+
+        /*
+         * ----------------------------------------------------
+         * MOVE RIGHT
+         * ----------------------------------------------------
+         */
 
         case 'd':
+
             hid_mouse_send(
                 hid_dev,
                 0,
@@ -193,21 +315,34 @@ void hid_mouse_task(void *pvParameters)
                 0,
                 0
             );
+
             break;
 
 
+        /*
+         * ----------------------------------------------------
+         * HELP
+         * ----------------------------------------------------
+         */
+
         case 'h':
-            printf("%s\n", help_string);
+
+            printf(
+                "%s\n",
+                help_string
+            );
+
             break;
 
 
         default:
+
             break;
         }
 
 
         vTaskDelay(
-            10 / portTICK_PERIOD_MS
+            pdMS_TO_TICKS(10)
         );
     }
 }

@@ -1,24 +1,21 @@
 set(srcs
     "app_main.c"
-    "app_main.c"
     "esp_hid_gap.c"
 
     "bluetooth/hid_bluetooth.c"
     "bluetooth/hid_ble.c"
 
-    "hid/hid_common.c"
     "hid/hid_keyboard.c"
     "hid/hid_mouse.c"
-    "hid/hid_reports.c"
-
-    "input/button.c"
+    "hid/hid_buttons.c"
+    "hid/hid_consumer.c"
+    "hid/hid_keymap.c"
 )
 
 set(include_dirs
     "."
     "bluetooth"
     "hid"
-    "input"
 )
 
 idf_component_register(

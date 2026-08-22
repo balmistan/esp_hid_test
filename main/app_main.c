@@ -33,6 +33,7 @@
 #include "hid/hid_keyboard.h"
 #include "hid/hid_mouse.h"
 #include "hid/hid_consumer.h"
+#include "hid/hid_buttons.h"
 
 
 /*
@@ -166,6 +167,149 @@ const unsigned char mediaReportMap[] = {
 
 /*
  * ============================================================
+ * COMBINED KEYBOARD + MOUSE REPORT MAP
+ * ============================================================
+ *
+ * Report ID 1 = Keyboard
+ * Report ID 2 = Mouse
+ *
+ * The keyboard report map is defined in hid_keyboard.c.
+ * The mouse report map is defined in hid_mouse.c.
+ *
+ * This combined map is used when:
+ *
+ * CONFIG_EXAMPLE_HID_DEVICE_ROLE == 2
+ *
+ * ============================================================
+ */
+
+#if CONFIG_EXAMPLE_HID_DEVICE_ROLE == 2
+
+static const unsigned char keyboardMouseReportMap[] = {
+
+    /*
+     * ========================================================
+     * KEYBOARD
+     * ========================================================
+     */
+
+    0x05, 0x01,
+    0x09, 0x06,
+    0xA1, 0x01,
+
+    0x85, 0x01,
+
+    0x05, 0x07,
+
+    0x19, 0xE0,
+    0x29, 0xE7,
+
+    0x15, 0x00,
+    0x25, 0x01,
+
+    0x75, 0x01,
+    0x95, 0x08,
+
+    0x81, 0x02,
+
+    0x95, 0x01,
+    0x75, 0x08,
+
+    0x81, 0x03,
+
+    0x95, 0x05,
+    0x75, 0x01,
+
+    0x05, 0x08,
+
+    0x19, 0x01,
+    0x29, 0x05,
+
+    0x91, 0x02,
+
+    0x95, 0x01,
+    0x75, 0x03,
+
+    0x91, 0x03,
+
+    0x95, 0x05,
+    0x75, 0x08,
+
+    0x15, 0x00,
+    0x25, 0x65,
+
+    0x05, 0x07,
+
+    0x19, 0x00,
+    0x29, 0x65,
+
+    0x81, 0x00,
+
+    0xC0,
+
+
+    /*
+     * ========================================================
+     * MOUSE
+     * ========================================================
+     */
+
+    0x05, 0x01,
+    0x09, 0x02,
+    0xA1, 0x01,
+
+    0x09, 0x01,
+    0xA1, 0x00,
+
+    /*
+     * Mouse Report ID = 2
+     */
+    0x85, 0x02,
+
+    0x05, 0x09,
+
+    0x19, 0x01,
+    0x29, 0x03,
+
+    0x15, 0x00,
+    0x25, 0x01,
+
+    0x95, 0x03,
+    0x75, 0x01,
+
+    0x81, 0x02,
+
+    0x95, 0x01,
+    0x75, 0x05,
+
+    0x81, 0x03,
+
+    0x05, 0x01,
+
+    0x09, 0x30,
+    0x09, 0x31,
+    0x09, 0x38,
+
+    0x15, 0x81,
+    0x25, 0x7F,
+
+    0x75, 0x08,
+    0x95, 0x03,
+
+    0x81, 0x06,
+
+    0xC0,
+    0xC0
+};
+
+#define KEYBOARD_MOUSE_REPORT_MAP_LEN \
+    (sizeof(keyboardMouseReportMap))
+
+#endif
+
+
+/*
+ * ============================================================
  * BLE REPORT MAP
  * ============================================================
  */
@@ -183,8 +327,8 @@ static esp_hid_raw_report_map_t ble_report_maps[] = {
 #elif CONFIG_EXAMPLE_HID_DEVICE_ROLE == 2
 
     {
-        .data = keyboardReportMap,
-        .len = KEYBOARD_REPORT_MAP_LEN
+        .data = keyboardMouseReportMap,
+        .len = KEYBOARD_MOUSE_REPORT_MAP_LEN
     },
 
 #elif CONFIG_EXAMPLE_HID_DEVICE_ROLE == 3
@@ -244,12 +388,19 @@ static esp_hid_device_config_t ble_hid_config = {
 
 void ble_hid_task_start_up(void)
 {
+    /*
+     * Do not start the task more than once.
+     */
     if (s_ble_hid_param.task_hdl) {
         return;
     }
 
+
 #if CONFIG_EXAMPLE_HID_DEVICE_ROLE == 1
 
+    /*
+     * Consumer / media HID demo.
+     */
     xTaskCreate(
         ble_hid_demo_task,
         "ble_hid_demo_task",
@@ -259,23 +410,62 @@ void ble_hid_task_start_up(void)
         &s_ble_hid_param.task_hdl
     );
 
+
 #elif CONFIG_EXAMPLE_HID_DEVICE_ROLE == 2
 
+    /*
+     * ========================================================
+     * COMBINED KEYBOARD + MOUSE
+     * ========================================================
+     *
+     * Report ID 1 = Keyboard
+     * Report ID 2 = Mouse
+     *
+     * Physical buttons are handled by hid_buttons.c.
+     */
+
+
+    /*
+     * Initialize keyboard module.
+     */
     hid_keyboard_init(
         s_ble_hid_param.hid_dev
     );
 
+
+    /*
+     * Initialize physical button module.
+     */
+    hid_buttons_init(
+        s_ble_hid_param.hid_dev
+    );
+
+
+    /*
+     * Start physical button task.
+     *
+     * GPIO4 = A
+     * GPIO5 = BACKSPACE
+     * GPIO6 = LEFT CLICK
+     *
+     * GPIO -> action association is defined
+     * in hid_keymap.c.
+     */
     xTaskCreate(
-        ble_hid_demo_task_kbd,
-        "ble_hid_demo_task_kbd",
+        hid_buttons_task,
+        "hid_buttons_task",
         3 * 1024,
         NULL,
         configMAX_PRIORITIES - 3,
         &s_ble_hid_param.task_hdl
     );
 
+
 #elif CONFIG_EXAMPLE_HID_DEVICE_ROLE == 3
 
+    /*
+     * Mouse-only device.
+     */
     xTaskCreate(
         hid_mouse_task,
         "hid_mouse_task",
@@ -333,6 +523,9 @@ static void ble_hidd_event_callback(
             "START"
         );
 
+        /*
+         * Start BLE advertising.
+         */
         esp_hid_ble_gap_adv_start();
 
         break;
@@ -376,10 +569,16 @@ static void ble_hidd_event_callback(
 
         if (param->control.control) {
 
+            /*
+             * HID device resumed.
+             */
             ble_hid_task_start_up();
 
         } else {
 
+            /*
+             * HID device suspended.
+             */
             ble_hid_task_shut_down();
         }
 
@@ -446,8 +645,16 @@ static void ble_hidd_event_callback(
         );
 
 
+        /*
+         * Stop the active HID task.
+         */
         ble_hid_task_shut_down();
 
+
+        /*
+         * Restart advertising so that the
+         * device can be paired again.
+         */
         esp_hid_ble_gap_adv_start();
 
         break;
@@ -490,7 +697,6 @@ void ble_hid_device_host_task(void *param)
      * This function returns only when
      * nimble_port_stop() is executed.
      */
-
     nimble_port_run();
 
     nimble_port_freertos_deinit();
@@ -554,7 +760,7 @@ void app_main(void)
      * ========================================================
      * HID GAP
      * ========================================================
-     */
+ */
 
     ESP_LOGI(
         TAG,
@@ -574,7 +780,6 @@ void app_main(void)
 
 #if CONFIG_BT_BLE_ENABLED || CONFIG_BT_NIMBLE_ENABLED
 
-
     /*
      * ========================================================
      * BLE GAP
@@ -583,6 +788,13 @@ void app_main(void)
 
 #if CONFIG_EXAMPLE_HID_DEVICE_ROLE == 2
 
+    /*
+     * Combined keyboard + mouse device.
+     *
+     * The primary BLE appearance is keyboard.
+     * The HID report map also contains the mouse
+     * report.
+     */
     ret =
         esp_hid_ble_gap_adv_init(
             ESP_HID_APPEARANCE_KEYBOARD,
@@ -591,6 +803,9 @@ void app_main(void)
 
 #elif CONFIG_EXAMPLE_HID_DEVICE_ROLE == 3
 
+    /*
+     * Mouse-only device.
+     */
     ret =
         esp_hid_ble_gap_adv_init(
             ESP_HID_APPEARANCE_MOUSE,
@@ -599,6 +814,9 @@ void app_main(void)
 
 #else
 
+    /*
+     * Generic HID device.
+     */
     ret =
         esp_hid_ble_gap_adv_init(
             ESP_HID_APPEARANCE_GENERIC,
@@ -613,6 +831,10 @@ void app_main(void)
 
 #if CONFIG_BT_BLE_ENABLED
 
+    /*
+     * Register GATTS callback when using
+     * the Bluedroid BLE stack.
+     */
     if ((ret =
         esp_ble_gatts_register_callback(
             esp_hidd_gatts_event_handler
@@ -629,6 +851,12 @@ void app_main(void)
 
 #endif
 
+
+    /*
+     * ========================================================
+     * BLE HID DEVICE
+     * ========================================================
+     */
 
     ESP_LOGI(
         TAG,
@@ -656,6 +884,11 @@ void app_main(void)
      * ========================================================
      */
 
+    /*
+     * Initialize persistent BLE storage.
+     *
+     * This allows the pairing information to be retained.
+     */
     ble_store_config_init();
 
 
@@ -664,10 +897,9 @@ void app_main(void)
 
 
     /*
-     * Starting NimBLE task after GATTS
-     * has been initialized.
+     * Start NimBLE host task after the
+     * HID device has been initialized.
      */
-
     ret =
         esp_nimble_enable(
             ble_hid_device_host_task

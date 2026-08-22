@@ -5,29 +5,51 @@
 
 #include "esp_hidd.h"
 
-/**
- * BLE HID keyboard report map.
- */
 extern const unsigned char keyboardReportMap[];
-
-/**
- * Length of the BLE HID keyboard report map.
+/*
+ * BLE HID combined keyboard + mouse report map.
+ *
+ * Report ID 1 = Keyboard
+ * Report ID 2 = Mouse
  */
-#define KEYBOARD_REPORT_MAP_LEN 65
 
-/**
+
+/*
+ * Length of the combined keyboard + mouse
+ * BLE HID report map.
+ */
+#define KEYBOARD_MOUSE_REPORT_MAP_LEN \
+    (sizeof(keyboardMouseReportMap))
+
+
+/*
  * Initialize the HID keyboard module.
  */
-void hid_keyboard_init(esp_hidd_dev_t *hid_dev);
+void hid_keyboard_init(
+    esp_hidd_dev_t *hid_dev
+);
 
-/**
- * Send a single character using the BLE HID keyboard.
- */
-void send_keyboard(char c);
 
-/**
- * FreeRTOS task responsible for monitoring the GPIO button.
+/*
+ * Send a single ASCII character.
  */
-void ble_hid_demo_task_kbd(void *pvParameters);
+void send_keyboard(
+    char c
+);
+
+
+/*
+ * Send a raw HID keyboard key code.
+ *
+ * Example:
+ *
+ *     send_keyboard_key(0x2A);
+ *
+ * sends Backspace.
+ */
+void send_keyboard_key(
+    uint8_t key_code
+);
+
 
 #endif /* HID_KEYBOARD_H */

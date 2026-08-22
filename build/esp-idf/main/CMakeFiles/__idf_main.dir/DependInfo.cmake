@@ -12,11 +12,11 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/daniele/esp_hid_test/main/bluetooth/hid_ble.c" "esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_ble.c.obj" "gcc" "esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_ble.c.obj.d"
   "/home/daniele/esp_hid_test/main/bluetooth/hid_bluetooth.c" "esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_bluetooth.c.obj" "gcc" "esp-idf/main/CMakeFiles/__idf_main.dir/bluetooth/hid_bluetooth.c.obj.d"
   "/home/daniele/esp_hid_test/main/esp_hid_gap.c" "esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_gap.c.obj" "gcc" "esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_gap.c.obj.d"
-  "/home/daniele/esp_hid_test/main/hid/hid_common.c" "esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_common.c.obj" "gcc" "esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_common.c.obj.d"
+  "/home/daniele/esp_hid_test/main/hid/hid_buttons.c" "esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_buttons.c.obj" "gcc" "esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_buttons.c.obj.d"
+  "/home/daniele/esp_hid_test/main/hid/hid_consumer.c" "esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_consumer.c.obj" "gcc" "esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_consumer.c.obj.d"
   "/home/daniele/esp_hid_test/main/hid/hid_keyboard.c" "esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keyboard.c.obj" "gcc" "esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keyboard.c.obj.d"
+  "/home/daniele/esp_hid_test/main/hid/hid_keymap.c" "esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keymap.c.obj" "gcc" "esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keymap.c.obj.d"
   "/home/daniele/esp_hid_test/main/hid/hid_mouse.c" "esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_mouse.c.obj" "gcc" "esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_mouse.c.obj.d"
-  "/home/daniele/esp_hid_test/main/hid/hid_reports.c" "esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_reports.c.obj" "gcc" "esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_reports.c.obj.d"
-  "/home/daniele/esp_hid_test/main/input/button.c" "esp-idf/main/CMakeFiles/__idf_main.dir/input/button.c.obj" "gcc" "esp-idf/main/CMakeFiles/__idf_main.dir/input/button.c.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

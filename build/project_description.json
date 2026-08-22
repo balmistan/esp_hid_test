@@ -1,7 +1,7 @@
 {
     "version":            "1.3",
     "project_name":       "esp_hid_device",
-    "project_version":    "762c2df-dirty",
+    "project_version":    "257821a-dirty",
     "project_path":       "/home/daniele/esp_hid_test",
     "idf_path":           "/home/daniele/esp-idf",
     "build_dir":          "/home/daniele/esp_hid_test/build",
@@ -895,8 +895,8 @@
             "managed_reqs": [],
             "managed_priv_reqs": [],
             "file": "/home/daniele/esp_hid_test/build/esp-idf/main/libmain.a",
-            "sources": [ "/home/daniele/esp_hid_test/main/app_main.c", "/home/daniele/esp_hid_test/main/esp_hid_gap.c", "/home/daniele/esp_hid_test/main/bluetooth/hid_bluetooth.c", "/home/daniele/esp_hid_test/main/bluetooth/hid_ble.c", "/home/daniele/esp_hid_test/main/hid/hid_common.c", "/home/daniele/esp_hid_test/main/hid/hid_keyboard.c", "/home/daniele/esp_hid_test/main/hid/hid_mouse.c", "/home/daniele/esp_hid_test/main/hid/hid_reports.c", "/home/daniele/esp_hid_test/main/input/button.c" ],
-            "include_dirs": [ ".", "bluetooth", "hid", "input" ]
+            "sources": [ "/home/daniele/esp_hid_test/main/app_main.c", "/home/daniele/esp_hid_test/main/esp_hid_gap.c", "/home/daniele/esp_hid_test/main/bluetooth/hid_bluetooth.c", "/home/daniele/esp_hid_test/main/bluetooth/hid_ble.c", "/home/daniele/esp_hid_test/main/hid/hid_keyboard.c", "/home/daniele/esp_hid_test/main/hid/hid_mouse.c", "/home/daniele/esp_hid_test/main/hid/hid_buttons.c", "/home/daniele/esp_hid_test/main/hid/hid_consumer.c", "/home/daniele/esp_hid_test/main/hid/hid_keymap.c" ],
+            "include_dirs": [ ".", "bluetooth", "hid" ]
         },
         "mbedtls": {
             "alias": "idf::mbedtls",
@@ -2881,7 +2881,7 @@
             "priv_reqs": [ "nvs_flash" ],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "include_dirs": [ ".", "bluetooth", "hid", "input" ]
+            "include_dirs": [ ".", "bluetooth", "hid" ]
         }
     },
     "gdbinit_files": {

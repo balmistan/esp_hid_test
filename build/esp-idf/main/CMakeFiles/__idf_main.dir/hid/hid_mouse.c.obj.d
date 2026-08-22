@@ -102,5 +102,4 @@ esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_mouse.c.obj: \
  /home/daniele/esp-idf/components/esp_event/include/esp_event_base.h \
  /home/daniele/esp-idf/components/esp_hid/include/esp_hid_common.h \
  /home/daniele/esp-idf/components/esp_hid/include/esp_hidd_transport.h \
- /home/daniele/esp_hid_test/main/hid/hid_keyboard.h \
  /home/daniele/esp_hid_test/main/hid/hid_mouse.h

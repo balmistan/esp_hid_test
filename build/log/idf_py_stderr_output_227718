@@ -9,10 +9,10 @@ Configuration Report
   Disabled Symbols/Choices With User-Set Value                                                             
    ─────────────────────────────────────────────────────────────────────────────────────────────────────   
     * BT_BLE_ENABLED (defined at /home/daniele/esp-idf/components/bt/host/bluedroid/Kconfig.in:266)        
-    with user-set value y from /tmp/kconfgen_tmpc73l5jw6                                                   
+    with user-set value y from /tmp/kconfgen_tmps10tlhz2                                                   
     * BT_BLE_42_FEATURES_SUPPORTED (defined at                                                             
     /home/daniele/esp-idf/components/bt/host/bluedroid/Kconfig.in:1564) with user-set value y from         
-    /tmp/kconfgen_tmpc73l5jw6                                                                              
+    /tmp/kconfgen_tmps10tlhz2                                                                              
    ─────────────────────────────────────────────────────────────────────────────────────────────────────   
  ───────────────────────────────────────────────────────────────────────────────────────────────────────── 
 CMake Warning at /home/daniele/esp-idf/tools/cmake/component_validation.cmake:106 (message):

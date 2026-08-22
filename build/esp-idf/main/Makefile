@@ -271,29 +271,53 @@ esp_hid_gap.c.s:
 	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/esp_hid_gap.c.s
 .PHONY : esp_hid_gap.c.s
 
-hid/hid_common.obj: hid/hid_common.c.obj
-.PHONY : hid/hid_common.obj
+hid/hid_buttons.obj: hid/hid_buttons.c.obj
+.PHONY : hid/hid_buttons.obj
 
 # target to build an object file
-hid/hid_common.c.obj:
-	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_common.c.obj
-.PHONY : hid/hid_common.c.obj
+hid/hid_buttons.c.obj:
+	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_buttons.c.obj
+.PHONY : hid/hid_buttons.c.obj
 
-hid/hid_common.i: hid/hid_common.c.i
-.PHONY : hid/hid_common.i
+hid/hid_buttons.i: hid/hid_buttons.c.i
+.PHONY : hid/hid_buttons.i
 
 # target to preprocess a source file
-hid/hid_common.c.i:
-	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_common.c.i
-.PHONY : hid/hid_common.c.i
+hid/hid_buttons.c.i:
+	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_buttons.c.i
+.PHONY : hid/hid_buttons.c.i
 
-hid/hid_common.s: hid/hid_common.c.s
-.PHONY : hid/hid_common.s
+hid/hid_buttons.s: hid/hid_buttons.c.s
+.PHONY : hid/hid_buttons.s
 
 # target to generate assembly for a file
-hid/hid_common.c.s:
-	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_common.c.s
-.PHONY : hid/hid_common.c.s
+hid/hid_buttons.c.s:
+	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_buttons.c.s
+.PHONY : hid/hid_buttons.c.s
+
+hid/hid_consumer.obj: hid/hid_consumer.c.obj
+.PHONY : hid/hid_consumer.obj
+
+# target to build an object file
+hid/hid_consumer.c.obj:
+	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_consumer.c.obj
+.PHONY : hid/hid_consumer.c.obj
+
+hid/hid_consumer.i: hid/hid_consumer.c.i
+.PHONY : hid/hid_consumer.i
+
+# target to preprocess a source file
+hid/hid_consumer.c.i:
+	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_consumer.c.i
+.PHONY : hid/hid_consumer.c.i
+
+hid/hid_consumer.s: hid/hid_consumer.c.s
+.PHONY : hid/hid_consumer.s
+
+# target to generate assembly for a file
+hid/hid_consumer.c.s:
+	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_consumer.c.s
+.PHONY : hid/hid_consumer.c.s
 
 hid/hid_keyboard.obj: hid/hid_keyboard.c.obj
 .PHONY : hid/hid_keyboard.obj
@@ -319,6 +343,30 @@ hid/hid_keyboard.c.s:
 	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keyboard.c.s
 .PHONY : hid/hid_keyboard.c.s
 
+hid/hid_keymap.obj: hid/hid_keymap.c.obj
+.PHONY : hid/hid_keymap.obj
+
+# target to build an object file
+hid/hid_keymap.c.obj:
+	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keymap.c.obj
+.PHONY : hid/hid_keymap.c.obj
+
+hid/hid_keymap.i: hid/hid_keymap.c.i
+.PHONY : hid/hid_keymap.i
+
+# target to preprocess a source file
+hid/hid_keymap.c.i:
+	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keymap.c.i
+.PHONY : hid/hid_keymap.c.i
+
+hid/hid_keymap.s: hid/hid_keymap.c.s
+.PHONY : hid/hid_keymap.s
+
+# target to generate assembly for a file
+hid/hid_keymap.c.s:
+	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_keymap.c.s
+.PHONY : hid/hid_keymap.c.s
+
 hid/hid_mouse.obj: hid/hid_mouse.c.obj
 .PHONY : hid/hid_mouse.obj
 
@@ -342,54 +390,6 @@ hid/hid_mouse.s: hid/hid_mouse.c.s
 hid/hid_mouse.c.s:
 	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_mouse.c.s
 .PHONY : hid/hid_mouse.c.s
-
-hid/hid_reports.obj: hid/hid_reports.c.obj
-.PHONY : hid/hid_reports.obj
-
-# target to build an object file
-hid/hid_reports.c.obj:
-	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_reports.c.obj
-.PHONY : hid/hid_reports.c.obj
-
-hid/hid_reports.i: hid/hid_reports.c.i
-.PHONY : hid/hid_reports.i
-
-# target to preprocess a source file
-hid/hid_reports.c.i:
-	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_reports.c.i
-.PHONY : hid/hid_reports.c.i
-
-hid/hid_reports.s: hid/hid_reports.c.s
-.PHONY : hid/hid_reports.s
-
-# target to generate assembly for a file
-hid/hid_reports.c.s:
-	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_reports.c.s
-.PHONY : hid/hid_reports.c.s
-
-input/button.obj: input/button.c.obj
-.PHONY : input/button.obj
-
-# target to build an object file
-input/button.c.obj:
-	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/input/button.c.obj
-.PHONY : input/button.c.obj
-
-input/button.i: input/button.c.i
-.PHONY : input/button.i
-
-# target to preprocess a source file
-input/button.c.i:
-	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/input/button.c.i
-.PHONY : input/button.c.i
-
-input/button.s: input/button.c.s
-.PHONY : input/button.s
-
-# target to generate assembly for a file
-input/button.c.s:
-	cd /home/daniele/esp_hid_test/build && $(MAKE) $(MAKESILENT) -f esp-idf/main/CMakeFiles/__idf_main.dir/build.make esp-idf/main/CMakeFiles/__idf_main.dir/input/button.c.s
-.PHONY : input/button.c.s
 
 # Help Target
 help:
@@ -416,21 +416,21 @@ help:
 	@echo "... esp_hid_gap.obj"
 	@echo "... esp_hid_gap.i"
 	@echo "... esp_hid_gap.s"
-	@echo "... hid/hid_common.obj"
-	@echo "... hid/hid_common.i"
-	@echo "... hid/hid_common.s"
+	@echo "... hid/hid_buttons.obj"
+	@echo "... hid/hid_buttons.i"
+	@echo "... hid/hid_buttons.s"
+	@echo "... hid/hid_consumer.obj"
+	@echo "... hid/hid_consumer.i"
+	@echo "... hid/hid_consumer.s"
 	@echo "... hid/hid_keyboard.obj"
 	@echo "... hid/hid_keyboard.i"
 	@echo "... hid/hid_keyboard.s"
+	@echo "... hid/hid_keymap.obj"
+	@echo "... hid/hid_keymap.i"
+	@echo "... hid/hid_keymap.s"
 	@echo "... hid/hid_mouse.obj"
 	@echo "... hid/hid_mouse.i"
 	@echo "... hid/hid_mouse.s"
-	@echo "... hid/hid_reports.obj"
-	@echo "... hid/hid_reports.i"
-	@echo "... hid/hid_reports.s"
-	@echo "... input/button.obj"
-	@echo "... input/button.i"
-	@echo "... input/button.s"
 .PHONY : help
 
 
