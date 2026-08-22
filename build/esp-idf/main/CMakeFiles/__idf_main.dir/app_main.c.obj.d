@@ -178,4 +178,6 @@ esp-idf/main/CMakeFiles/__idf_main.dir/app_main.c.obj: \
  /home/daniele/esp_hid_test/main/esp_hid_gap.h \
  /home/daniele/esp-idf/components/bt/include/esp32c3/include/esp_bt.h \
  /home/daniele/esp-idf/components/esp_system/include/esp_task.h \
- /home/daniele/esp_hid_test/main/hid/hid_keyboard.h
+ /home/daniele/esp_hid_test/main/hid/hid_keyboard.h \
+ /home/daniele/esp_hid_test/main/hid/hid_mouse.h \
+ /home/daniele/esp_hid_test/main/hid/hid_consumer.h

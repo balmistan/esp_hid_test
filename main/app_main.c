@@ -31,6 +31,8 @@
 #include "esp_hid_gap.h"
 
 #include "hid/hid_keyboard.h"
+#include "hid/hid_mouse.h"
+#include "hid/hid_consumer.h"
 
 
 /*
@@ -159,157 +161,6 @@ const unsigned char mediaReportMap[] = {
     0xC0
 };
 
-
-/*
- * ============================================================
- * MOUSE
- * ============================================================
- */
-
-#if CONFIG_EXAMPLE_HID_DEVICE_ROLE && CONFIG_EXAMPLE_HID_DEVICE_ROLE == 3
-
-const unsigned char mouseReportMap[] = {
-
-    0x05, 0x01,
-    0x09, 0x02,
-    0xA1, 0x01,
-
-    0x09, 0x01,
-    0xA1, 0x00,
-
-    0x05, 0x09,
-
-    0x19, 0x01,
-    0x29, 0x03,
-
-    0x15, 0x00,
-    0x25, 0x01,
-
-    0x95, 0x03,
-    0x75, 0x01,
-
-    0x81, 0x02,
-
-    0x95, 0x01,
-    0x75, 0x05,
-
-    0x81, 0x03,
-
-    0x05, 0x01,
-
-    0x09, 0x30,
-    0x09, 0x31,
-    0x09, 0x38,
-
-    0x15, 0x81,
-    0x25, 0x7F,
-
-    0x75, 0x08,
-    0x95, 0x03,
-
-    0x81, 0x06,
-
-    0xC0,
-    0xC0
-};
-
-
-/*
- * ============================================================
- * MOUSE FUNCTIONS
- * ============================================================
- */
-
-void send_mouse(
-    uint8_t buttons,
-    char dx,
-    char dy,
-    char wheel)
-{
-    static uint8_t buffer[4] = {0};
-
-    buffer[0] = buttons;
-    buffer[1] = dx;
-    buffer[2] = dy;
-    buffer[3] = wheel;
-
-    esp_hidd_dev_input_set(
-        s_ble_hid_param.hid_dev,
-        0,
-        0,
-        buffer,
-        4
-    );
-}
-
-
-void ble_hid_demo_task_mouse(void *pvParameters)
-{
-    static const char *help_string =
-        "########################################################################\n"
-        "BT hid mouse demo usage:\n"
-        "You can input these value to simulate mouse: "
-        "'q', 'w', 'e', 'a', 's', 'd', 'h'\n"
-        "q -- click the left key\n"
-        "w -- move up\n"
-        "e -- click the right key\n"
-        "a -- move left\n"
-        "s -- move down\n"
-        "d -- move right\n"
-        "h -- show the help\n"
-        "########################################################################\n";
-
-    printf("%s\n", help_string);
-
-    char c;
-
-    while (1) {
-
-        c = fgetc(stdin);
-
-        switch (c) {
-
-        case 'q':
-            send_mouse(1, 0, 0, 0);
-            break;
-
-        case 'w':
-            send_mouse(0, 0, -10, 0);
-            break;
-
-        case 'e':
-            send_mouse(2, 0, 0, 0);
-            break;
-
-        case 'a':
-            send_mouse(0, -10, 0, 0);
-            break;
-
-        case 's':
-            send_mouse(0, 0, 10, 0);
-            break;
-
-        case 'd':
-            send_mouse(0, 10, 0, 0);
-            break;
-
-        case 'h':
-            printf("%s\n", help_string);
-            break;
-
-        default:
-            break;
-        }
-
-        vTaskDelay(
-            10 / portTICK_PERIOD_MS
-        );
-    }
-}
-
-#endif
-
-
 #endif
 
 
@@ -349,336 +200,40 @@ static esp_hid_raw_report_map_t ble_report_maps[] = {
 
 /*
  * ============================================================
- * BLE HID CONFIG
+ * BLE HID CONFIGURATION
  * ============================================================
  */
 
 static esp_hid_device_config_t ble_hid_config = {
 
-    .vendor_id =
-        0x16C0,
+    .vendor_id = 0x16C0,
 
-    .product_id =
-        0x05DF,
+    .product_id = 0x05DF,
 
-    .version =
-        0x0100,
+    .version = 0x0100,
 
 #if CONFIG_EXAMPLE_HID_DEVICE_ROLE == 2
 
-    .device_name =
-        "ESP Keyboard",
+    .device_name = "ESP Keyboard",
 
 #elif CONFIG_EXAMPLE_HID_DEVICE_ROLE == 3
 
-    .device_name =
-        "ESP Mouse",
+    .device_name = "ESP Mouse",
 
 #else
 
-    .device_name =
-        "ESP BLE HID2",
+    .device_name = "ESP BLE HID2",
 
 #endif
 
-    .manufacturer_name =
-        "Espressif",
+    .manufacturer_name = "Espressif",
 
-    .serial_number =
-        "1234567890",
+    .serial_number = "1234567890",
 
-    .report_maps =
-        ble_report_maps,
+    .report_maps = ble_report_maps,
 
-    .report_maps_len =
-        1
+    .report_maps_len = 1
 };
-
-
-/*
- * ============================================================
- * CONSUMER CONTROL
- * ============================================================
- */
-
-#define HID_CC_RPT_MUTE                 1
-#define HID_CC_RPT_POWER                2
-#define HID_CC_RPT_LAST                 3
-#define HID_CC_RPT_ASSIGN_SEL           4
-#define HID_CC_RPT_PLAY                 5
-#define HID_CC_RPT_PAUSE                6
-#define HID_CC_RPT_RECORD               7
-#define HID_CC_RPT_FAST_FWD             8
-#define HID_CC_RPT_REWIND               9
-#define HID_CC_RPT_SCAN_NEXT_TRK        10
-#define HID_CC_RPT_SCAN_PREV_TRK        11
-#define HID_CC_RPT_STOP                 12
-
-#define HID_CC_RPT_CHANNEL_UP           0x10
-#define HID_CC_RPT_CHANNEL_DOWN         0x30
-#define HID_CC_RPT_VOLUME_UP            0x40
-#define HID_CC_RPT_VOLUME_DOWN          0x80
-
-#define HID_CC_RPT_NUMERIC_BITS         0xF0
-#define HID_CC_RPT_CHANNEL_BITS         0xCF
-#define HID_CC_RPT_VOLUME_BITS          0x3F
-#define HID_CC_RPT_BUTTON_BITS          0xF0
-#define HID_CC_RPT_SELECTION_BITS       0xCF
-
-#define HID_CC_RPT_SET_NUMERIC(s, x) \
-    (s)[0] &= HID_CC_RPT_NUMERIC_BITS; \
-    (s)[0] = (x)
-
-#define HID_CC_RPT_SET_CHANNEL(s, x) \
-    (s)[0] &= HID_CC_RPT_CHANNEL_BITS; \
-    (s)[0] |= ((x) & 0x03) << 4
-
-#define HID_CC_RPT_SET_VOLUME_UP(s) \
-    (s)[0] &= HID_CC_RPT_VOLUME_BITS; \
-    (s)[0] |= 0x40
-
-#define HID_CC_RPT_SET_VOLUME_DOWN(s) \
-    (s)[0] &= HID_CC_RPT_VOLUME_BITS; \
-    (s)[0] |= 0x80
-
-#define HID_CC_RPT_SET_BUTTON(s, x) \
-    (s)[1] &= HID_CC_RPT_BUTTON_BITS; \
-    (s)[1] |= (x)
-
-#define HID_CC_RPT_SET_SELECTION(s, x) \
-    (s)[1] &= HID_CC_RPT_SELECTION_BITS; \
-    (s)[1] |= ((x) & 0x03) << 4
-
-
-#define HID_CONSUMER_POWER          48
-#define HID_CONSUMER_RESET          49
-#define HID_CONSUMER_SLEEP          50
-
-#define HID_CONSUMER_MENU           64
-#define HID_CONSUMER_SELECTION      128
-#define HID_CONSUMER_ASSIGN_SEL     129
-#define HID_CONSUMER_MODE_STEP      130
-#define HID_CONSUMER_RECALL_LAST    131
-#define HID_CONSUMER_QUIT           148
-#define HID_CONSUMER_HELP           149
-#define HID_CONSUMER_CHANNEL_UP     156
-#define HID_CONSUMER_CHANNEL_DOWN   157
-
-#define HID_CONSUMER_PLAY           176
-#define HID_CONSUMER_PAUSE          177
-#define HID_CONSUMER_RECORD         178
-#define HID_CONSUMER_FAST_FORWARD   179
-#define HID_CONSUMER_REWIND         180
-#define HID_CONSUMER_SCAN_NEXT_TRK  181
-#define HID_CONSUMER_SCAN_PREV_TRK  182
-#define HID_CONSUMER_STOP           183
-#define HID_CONSUMER_EJECT          184
-#define HID_CONSUMER_RANDOM_PLAY    185
-#define HID_CONSUMER_SELECT_DISC    186
-#define HID_CONSUMER_ENTER_DISC     187
-#define HID_CONSUMER_REPEAT         188
-#define HID_CONSUMER_STOP_EJECT     204
-#define HID_CONSUMER_PLAY_PAUSE     205
-#define HID_CONSUMER_PLAY_SKIP      206
-
-#define HID_CONSUMER_VOLUME         224
-#define HID_CONSUMER_BALANCE        225
-#define HID_CONSUMER_MUTE           226
-#define HID_CONSUMER_BASS           227
-#define HID_CONSUMER_VOLUME_UP      233
-#define HID_CONSUMER_VOLUME_DOWN    234
-
-#define HID_RPT_ID_CC_IN            3
-#define HID_CC_IN_RPT_LEN           2
-
-
-void esp_hidd_send_consumer_value(
-    uint8_t key_cmd,
-    bool key_pressed)
-{
-    uint8_t buffer[HID_CC_IN_RPT_LEN] = {
-        0,
-        0
-    };
-
-
-    if (key_pressed) {
-
-        switch (key_cmd) {
-
-        case HID_CONSUMER_CHANNEL_UP:
-
-            HID_CC_RPT_SET_CHANNEL(
-                buffer,
-                HID_CC_RPT_CHANNEL_UP
-            );
-
-            break;
-
-
-        case HID_CONSUMER_CHANNEL_DOWN:
-
-            HID_CC_RPT_SET_CHANNEL(
-                buffer,
-                HID_CC_RPT_CHANNEL_DOWN
-            );
-
-            break;
-
-
-        case HID_CONSUMER_VOLUME_UP:
-
-            HID_CC_RPT_SET_VOLUME_UP(
-                buffer
-            );
-
-            break;
-
-
-        case HID_CONSUMER_VOLUME_DOWN:
-
-            HID_CC_RPT_SET_VOLUME_DOWN(
-                buffer
-            );
-
-            break;
-
-
-        case HID_CONSUMER_MUTE:
-
-            HID_CC_RPT_SET_BUTTON(
-                buffer,
-                HID_CC_RPT_MUTE
-            );
-
-            break;
-
-
-        case HID_CONSUMER_POWER:
-
-            HID_CC_RPT_SET_BUTTON(
-                buffer,
-                HID_CC_RPT_POWER
-            );
-
-            break;
-
-
-        case HID_CONSUMER_RECALL_LAST:
-
-            HID_CC_RPT_SET_BUTTON(
-                buffer,
-                HID_CC_RPT_LAST
-            );
-
-            break;
-
-
-        case HID_CONSUMER_ASSIGN_SEL:
-
-            HID_CC_RPT_SET_BUTTON(
-                buffer,
-                HID_CC_RPT_ASSIGN_SEL
-            );
-
-            break;
-
-
-        case HID_CONSUMER_PLAY:
-
-            HID_CC_RPT_SET_BUTTON(
-                buffer,
-                HID_CC_RPT_PLAY
-            );
-
-            break;
-
-
-        case HID_CONSUMER_PAUSE:
-
-            HID_CC_RPT_SET_BUTTON(
-                buffer,
-                HID_CC_RPT_PAUSE
-            );
-
-            break;
-
-
-        case HID_CONSUMER_RECORD:
-
-            HID_CC_RPT_SET_BUTTON(
-                buffer,
-                HID_CC_RPT_RECORD
-            );
-
-            break;
-
-
-        case HID_CONSUMER_FAST_FORWARD:
-
-            HID_CC_RPT_SET_BUTTON(
-                buffer,
-                HID_CC_RPT_FAST_FWD
-            );
-
-            break;
-
-
-        case HID_CONSUMER_REWIND:
-
-            HID_CC_RPT_SET_BUTTON(
-                buffer,
-                HID_CC_RPT_REWIND
-            );
-
-            break;
-
-
-        case HID_CONSUMER_SCAN_NEXT_TRK:
-
-            HID_CC_RPT_SET_BUTTON(
-                buffer,
-                HID_CC_RPT_SCAN_NEXT_TRK
-            );
-
-            break;
-
-
-        case HID_CONSUMER_SCAN_PREV_TRK:
-
-            HID_CC_RPT_SET_BUTTON(
-                buffer,
-                HID_CC_RPT_SCAN_PREV_TRK
-            );
-
-            break;
-
-
-        case HID_CONSUMER_STOP:
-
-            HID_CC_RPT_SET_BUTTON(
-                buffer,
-                HID_CC_RPT_STOP
-            );
-
-            break;
-
-
-        default:
-
-            break;
-        }
-    }
-
-
-    esp_hidd_dev_input_set(
-        s_ble_hid_param.hid_dev,
-        0,
-        HID_RPT_ID_CC_IN,
-        buffer,
-        HID_CC_IN_RPT_LEN
-    );
-}
 
 
 /*
@@ -722,10 +277,10 @@ void ble_hid_task_start_up(void)
 #elif CONFIG_EXAMPLE_HID_DEVICE_ROLE == 3
 
     xTaskCreate(
-        ble_hid_demo_task_mouse,
-        "ble_hid_demo_task_mouse",
+        hid_mouse_task,
+        "hid_mouse_task",
         3 * 1024,
-        NULL,
+        s_ble_hid_param.hid_dev,
         configMAX_PRIORITIES - 3,
         &s_ble_hid_param.task_hdl
     );
@@ -913,9 +468,6 @@ static void ble_hidd_event_callback(
         break;
     }
 }
-
-
-
 
 
 /*
