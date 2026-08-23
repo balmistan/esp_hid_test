@@ -86,71 +86,148 @@ static void execute_action(hid_action_t action)
 
     switch (action)
     {
-        case HID_ACTION_KEY_A:
+        /*
+         * ----------------------------------------------------
+         * LEFT MOUSE CLICK 1 SECOND + ENTER
+         * ----------------------------------------------------
+         */
+
+        case HID_ACTION_MOUSE_LEFT_CLICK_ENTER:
 
             ESP_LOGI(
                 TAG,
-                "BUTTON ACTION: A"
+                "BUTTON ACTION: LEFT CLICK 1s + ENTER"
             );
 
-            send_keyboard('a');
-
-            break;
-
-
-        case HID_ACTION_KEY_BACKSPACE:
-
-            ESP_LOGI(
-                TAG,
-                "BUTTON ACTION: BACKSPACE"
+            /*
+             * Mouse button pressed.
+             */
+            hid_mouse_send(
+                s_hid_dev,
+                1,
+                0,
+                0,
+                0
             );
 
+            /*
+             * Keep left mouse button pressed
+             * for 1 second.
+             */
+            vTaskDelay(
+                pdMS_TO_TICKS(1000)
+            );
+
+            /*
+             * Mouse button released.
+             */
+            hid_mouse_send(
+                s_hid_dev,
+                0,
+                0,
+                0,
+                0
+            );
+
+            /*
+             * Send ENTER.
+             *
+             * HID keyboard usage ID for ENTER = 0x28.
+             */
             send_keyboard_key(
-                0x2A
+                0x28
             );
 
             break;
 
 
-        case HID_ACTION_MOUSE_LEFT_CLICK:
+        /*
+         * ----------------------------------------------------
+         * SEND 123654
+         * ----------------------------------------------------
+         */
 
-   ESP_LOGI(
-        TAG,
-        "BUTTON ACTION: LEFT CLICK"
-    );
+        case HID_ACTION_SEND_123654:
 
-    /*
-     * Mouse button pressed.
-     */
-    hid_mouse_send(
-        s_hid_dev,
-        1,
-        0,
-        0,
-        0
-    );
+            ESP_LOGI(
+                TAG,
+                "BUTTON ACTION: SEND 123654"
+            );
 
-    /*
-     * Keep left mouse button pressed
-     * for 3 seconds.
-     */
-    vTaskDelay(
-        pdMS_TO_TICKS(3000)
-    );
+            send_keyboard('1');
 
-    /*
-     * Mouse button released.
-     */
-    hid_mouse_send(
-        s_hid_dev,
-        0,
-        0,
-        0,
-        0
-    );
+            vTaskDelay(
+                pdMS_TO_TICKS(200)
+            );
 
-    break;
+            send_keyboard('2');
 
+            vTaskDelay(
+                pdMS_TO_TICKS(200)
+            );
+
+            send_keyboard('3');
+
+            vTaskDelay(
+                pdMS_TO_TICKS(200)
+            );
+
+            send_keyboard('6');
+
+            vTaskDelay(
+                pdMS_TO_TICKS(200)
+            );
+
+            send_keyboard('5');
+
+            vTaskDelay(
+                pdMS_TO_TICKS(200)
+            );
+
+            send_keyboard('4');
+
+            break;
+
+
+        /*
+         * ----------------------------------------------------
+         * DELETE 6 CHARACTERS
+         * ----------------------------------------------------
+         */
+
+        case HID_ACTION_DELETE_6_CHARS:
+
+            ESP_LOGI(
+                TAG,
+                "BUTTON ACTION: DELETE 6 CHARACTERS"
+            );
+
+            /*
+             * HID usage ID for BACKSPACE = 0x2A.
+             */
+
+            for (int i = 0; i < 6; i++)
+            {
+                send_keyboard_key(
+                    0x2A
+                );
+
+                /*
+                 * Small interval between Backspaces.
+                 */
+                vTaskDelay(
+                    pdMS_TO_TICKS(50)
+                );
+            }
+
+            break;
+
+
+        /*
+         * ----------------------------------------------------
+         * NONE
+         * ----------------------------------------------------
+         */
 
         case HID_ACTION_NONE:
 
@@ -190,17 +267,17 @@ void hid_buttons_task(void *pvParameters)
 
     ESP_LOGI(
         TAG,
-        "GPIO4 = A"
+        "GPIO4 = LEFT CLICK 1s + ENTER"
     );
 
     ESP_LOGI(
         TAG,
-        "GPIO5 = BACKSPACE"
+        "GPIO5 = 123654"
     );
 
     ESP_LOGI(
         TAG,
-        "GPIO6 = LEFT CLICK"
+        "GPIO6 = DELETE 6 CHARACTERS"
     );
 
 
