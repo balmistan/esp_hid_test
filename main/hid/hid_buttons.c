@@ -8,9 +8,9 @@
 #include "esp_err.h"
 #include "esp_log.h"
 
-#include "hid/hid_keymap.h"
-#include "hid/hid_keyboard.h"
-#include "hid/hid_mouse.h"
+#include "hid_keymap.h"
+#include "hid_keyboard.h"
+#include "hid_mouse.h"
 
 
 static const char *TAG = "HID_BUTTONS";
@@ -73,8 +73,8 @@ static void configure_button_gpio(uint8_t gpio)
 
 static void execute_action(hid_action_t action)
 {
-    if (s_hid_dev == NULL) {
-
+    if (s_hid_dev == NULL)
+    {
         ESP_LOGW(
             TAG,
             "HID device not initialized"
@@ -88,7 +88,12 @@ static void execute_action(hid_action_t action)
     {
         /*
          * ----------------------------------------------------
-         * LEFT MOUSE CLICK 1 SECOND + ENTER
+         * GPIO4
+         *
+         * 1. LEFT CLICK 1 SECOND
+         * 2. ENTER
+         * 3. SEND 123654
+         * 4. DELETE 6 CHARACTERS
          * ----------------------------------------------------
          */
 
@@ -96,12 +101,17 @@ static void execute_action(hid_action_t action)
 
             ESP_LOGI(
                 TAG,
-                "BUTTON ACTION: LEFT CLICK 1s + ENTER"
+                "BUTTON ACTION: GPIO4 MACRO"
             );
 
+
             /*
-             * Mouse button pressed.
+             * ==================================================
+             * 1. GPIO4 FUNCTION
+             * LEFT CLICK 1 SECOND + ENTER
+             * ==================================================
              */
+
             hid_mouse_send(
                 s_hid_dev,
                 1,
@@ -119,7 +129,7 @@ static void execute_action(hid_action_t action)
             );
 
             /*
-             * Mouse button released.
+             * Release left mouse button.
              */
             hid_mouse_send(
                 s_hid_dev,
@@ -132,17 +142,94 @@ static void execute_action(hid_action_t action)
             /*
              * Send ENTER.
              *
-             * HID keyboard usage ID for ENTER = 0x28.
+             * HID usage ID for ENTER = 0x28.
              */
             send_keyboard_key(
                 0x28
             );
+
+
+            /*
+             * Pause before sending characters.
+             */
+            vTaskDelay(
+                pdMS_TO_TICKS(200)
+            );
+
+
+            /*
+             * ==================================================
+             * 2. GPIO5 FUNCTION
+             * SEND 123654
+             * ==================================================
+             */
+
+            send_keyboard('1');
+
+            vTaskDelay(
+                pdMS_TO_TICKS(50)
+            );
+
+            send_keyboard('2');
+
+            vTaskDelay(
+                pdMS_TO_TICKS(50)
+            );
+
+            send_keyboard('3');
+
+            vTaskDelay(
+                pdMS_TO_TICKS(50)
+            );
+
+            send_keyboard('6');
+
+            vTaskDelay(
+                pdMS_TO_TICKS(50)
+            );
+
+            send_keyboard('5');
+
+            vTaskDelay(
+                pdMS_TO_TICKS(50)
+            );
+
+            send_keyboard('4');
+
+
+            /*
+             * Pause before deleting the characters.
+             */
+            vTaskDelay(
+                pdMS_TO_TICKS(5000)
+            );
+
+
+            /*
+             * ==================================================
+             * 3. GPIO6 FUNCTION
+             * DELETE 6 CHARACTERS
+             * ==================================================
+             */
+
+            for (int i = 0; i < 6; i++)
+            {
+                send_keyboard_key(
+                    0x2A
+                );
+
+                vTaskDelay(
+                    pdMS_TO_TICKS(50)
+                );
+            }
 
             break;
 
 
         /*
          * ----------------------------------------------------
+         * GPIO5
+         *
          * SEND 123654
          * ----------------------------------------------------
          */
@@ -157,31 +244,31 @@ static void execute_action(hid_action_t action)
             send_keyboard('1');
 
             vTaskDelay(
-                pdMS_TO_TICKS(200)
+                pdMS_TO_TICKS(50)
             );
 
             send_keyboard('2');
 
             vTaskDelay(
-                pdMS_TO_TICKS(200)
+                pdMS_TO_TICKS(50)
             );
 
             send_keyboard('3');
 
             vTaskDelay(
-                pdMS_TO_TICKS(200)
+                pdMS_TO_TICKS(50)
             );
 
             send_keyboard('6');
 
             vTaskDelay(
-                pdMS_TO_TICKS(200)
+                pdMS_TO_TICKS(50)
             );
 
             send_keyboard('5');
 
             vTaskDelay(
-                pdMS_TO_TICKS(200)
+                pdMS_TO_TICKS(50)
             );
 
             send_keyboard('4');
@@ -191,6 +278,8 @@ static void execute_action(hid_action_t action)
 
         /*
          * ----------------------------------------------------
+         * GPIO6
+         *
          * DELETE 6 CHARACTERS
          * ----------------------------------------------------
          */
@@ -202,19 +291,12 @@ static void execute_action(hid_action_t action)
                 "BUTTON ACTION: DELETE 6 CHARACTERS"
             );
 
-            /*
-             * HID usage ID for BACKSPACE = 0x2A.
-             */
-
             for (int i = 0; i < 6; i++)
             {
                 send_keyboard_key(
                     0x2A
                 );
 
-                /*
-                 * Small interval between Backspaces.
-                 */
                 vTaskDelay(
                     pdMS_TO_TICKS(50)
                 );
@@ -252,6 +334,9 @@ void hid_buttons_task(void *pvParameters)
     );
 
 
+    /*
+     * Configure GPIOs.
+     */
     configure_button_gpio(
         HID_BUTTON_1_GPIO
     );
@@ -267,7 +352,7 @@ void hid_buttons_task(void *pvParameters)
 
     ESP_LOGI(
         TAG,
-        "GPIO4 = LEFT CLICK 1s + ENTER"
+        "GPIO4 = MACRO: CLICK 1s + ENTER + 123654 + DELETE"
     );
 
     ESP_LOGI(
@@ -359,6 +444,8 @@ void hid_buttons_task(void *pvParameters)
          * ----------------------------------------------------
          */
 
+
+
         if (state_3 == 0 &&
             last_state_3 == 1)
         {
@@ -374,6 +461,9 @@ void hid_buttons_task(void *pvParameters)
         }
 
 
+        /*
+         * Save current states.
+         */
         last_state_1 = state_1;
         last_state_2 = state_2;
         last_state_3 = state_3;
