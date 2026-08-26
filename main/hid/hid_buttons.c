@@ -90,10 +90,12 @@ static void execute_action(hid_action_t action)
          * ----------------------------------------------------
          * GPIO4
          *
-         * 1. LEFT CLICK 1 SECOND
-         * 2. ENTER
-         * 3. SEND 123654
-         * 4. DELETE 6 CHARACTERS
+         * 1. ENTER
+         * 2. MOVE CURSOR 100 PIXELS UP
+         * 3. LEFT CLICK 1 SECOND
+         * 4. SEND 123654
+         * 5. WAIT 5 SECONDS
+         * 6. DELETE 6 CHARACTERS
          * ----------------------------------------------------
          */
 
@@ -105,10 +107,34 @@ static void execute_action(hid_action_t action)
             );
 
 
+           
+
             /*
              * ==================================================
-             * 1. GPIO4 FUNCTION
-             * LEFT CLICK 1 SECOND + ENTER
+             * 2. MOVE CURSOR 100 PIXELS UP
+             * ==================================================
+             */
+
+            hid_mouse_send(
+                s_hid_dev,
+                0,
+                0,
+                -100,
+                0
+            );
+
+            /*
+             * Small pause to ensure the movement
+             * is sent before the click.
+             */
+            vTaskDelay(
+                pdMS_TO_TICKS(100)
+            );
+
+
+            /*
+             * ==================================================
+             * 3. LEFT CLICK 1 SECOND
              * ==================================================
              */
 
@@ -139,28 +165,33 @@ static void execute_action(hid_action_t action)
                 0
             );
 
-            /*
-             * Send ENTER.
-             *
-             * HID usage ID for ENTER = 0x28.
+             /*
+             * ==================================================
+             * 1. SEND ENTER
+             * ==================================================
              */
+
+              vTaskDelay(
+                pdMS_TO_TICKS(100)
+            );
+
             send_keyboard_key(
                 0x28
             );
+
 
 
             /*
              * Pause before sending characters.
              */
             vTaskDelay(
-                pdMS_TO_TICKS(200)
+                pdMS_TO_TICKS(1000)
             );
 
 
             /*
              * ==================================================
-             * 2. GPIO5 FUNCTION
-             * SEND 123654
+             * 4. SEND 123654
              * ==================================================
              */
 
@@ -198,8 +229,11 @@ static void execute_action(hid_action_t action)
 
 
             /*
-             * Pause before deleting the characters.
+             * ==================================================
+             * 5. WAIT 5 SECONDS
+             * ==================================================
              */
+
             vTaskDelay(
                 pdMS_TO_TICKS(5000)
             );
@@ -207,8 +241,7 @@ static void execute_action(hid_action_t action)
 
             /*
              * ==================================================
-             * 3. GPIO6 FUNCTION
-             * DELETE 6 CHARACTERS
+             * 6. DELETE 6 CHARACTERS
              * ==================================================
              */
 
@@ -337,6 +370,7 @@ void hid_buttons_task(void *pvParameters)
     /*
      * Configure GPIOs.
      */
+
     configure_button_gpio(
         HID_BUTTON_1_GPIO
     );
@@ -352,7 +386,7 @@ void hid_buttons_task(void *pvParameters)
 
     ESP_LOGI(
         TAG,
-        "GPIO4 = MACRO: CLICK 1s + ENTER + 123654 + DELETE"
+        "GPIO4 = ENTER + MOVE UP 100px + CLICK 1s + 123654 + DELETE"
     );
 
     ESP_LOGI(
@@ -444,8 +478,6 @@ void hid_buttons_task(void *pvParameters)
          * ----------------------------------------------------
          */
 
-
-
         if (state_3 == 0 &&
             last_state_3 == 1)
         {
@@ -464,6 +496,7 @@ void hid_buttons_task(void *pvParameters)
         /*
          * Save current states.
          */
+
         last_state_1 = state_1;
         last_state_2 = state_2;
         last_state_3 = state_3;
@@ -472,6 +505,7 @@ void hid_buttons_task(void *pvParameters)
         /*
          * Poll every 10 ms.
          */
+
         vTaskDelay(
             pdMS_TO_TICKS(10)
         );
