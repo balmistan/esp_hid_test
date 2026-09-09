@@ -12,7 +12,7 @@ hid_action_t hid_keymap_get_action(uint8_t gpio)
             return HID_ACTION_SEND_123654;
 
         case HID_BUTTON_3_GPIO:
-            return HID_ACTION_DELETE_6_CHARS;
+            return HID_ACTION_DELETE_2_CHARS_SEND_123654;
 
         default:
             return HID_ACTION_NONE;

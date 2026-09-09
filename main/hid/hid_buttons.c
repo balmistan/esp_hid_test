@@ -313,27 +313,67 @@ static void execute_action(hid_action_t action)
          * ----------------------------------------------------
          * GPIO6
          *
-         * DELETE 6 CHARACTERS
+         * DELETE 3 CHARACTERS AND SEND 123654
          * ----------------------------------------------------
          */
 
-        case HID_ACTION_DELETE_6_CHARS:
+        case HID_ACTION_DELETE_2_CHARS_SEND_123654:
 
             ESP_LOGI(
                 TAG,
-                "BUTTON ACTION: DELETE 6 CHARACTERS"
+                "BUTTON ACTION: DELETE 2 CHARACTERS AND SEND 123654"
             );
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 2; i++)
             {
                 send_keyboard_key(
                     0x2A
                 );
 
                 vTaskDelay(
-                    pdMS_TO_TICKS(50)
+                    pdMS_TO_TICKS(500)
                 );
             }
+          /*  
+            vTaskDelay(
+                    pdMS_TO_TICKS(100)
+                );
+*/
+            /*SEND 1236564*/
+
+            int delay=20;
+
+            send_keyboard('1');
+
+            vTaskDelay(
+                pdMS_TO_TICKS(delay)
+            );
+
+            send_keyboard('2');
+
+            vTaskDelay(
+                pdMS_TO_TICKS(delay)
+            );
+
+            send_keyboard('3');
+
+            vTaskDelay(
+                pdMS_TO_TICKS(delay)
+            );
+
+            send_keyboard('6');
+
+            vTaskDelay(
+                pdMS_TO_TICKS(delay)
+            );
+
+            send_keyboard('5');
+
+            vTaskDelay(
+                pdMS_TO_TICKS(delay)
+            );
+
+            send_keyboard('4');
 
             break;
 
