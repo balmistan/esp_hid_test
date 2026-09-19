@@ -61,10 +61,10 @@ static void IRAM_ATTR button_gpio_isr_handler(void *arg)
     BaseType_t higher_priority_task_woken = pdFALSE;
 
     xTaskNotifyFromISR(
-        s_button_task_handle,
-        gpio_num,
-        eSetBits,
-        &higher_priority_task_woken);
+    s_button_task_handle,
+    (1UL << gpio_num),
+    eSetBits,
+    &higher_priority_task_woken);
 
     if (higher_priority_task_woken)
     {
