@@ -44,7 +44,15 @@ static void enter_deep_sleep(void)
     ESP_LOGI(TAG, "Deep sleep wakeup mask: 0x%llX", wakeup_mask);
     ESP_LOGI(TAG, "Entering deep sleep...");
 
-    esp_deep_sleep_start();
+    ESP_LOGI(TAG,
+         "GPIO levels before sleep: GPIO4=%d GPIO5=%d GPIO6=%d",
+         gpio_get_level(HID_BUTTON_1_GPIO),
+         gpio_get_level(HID_BUTTON_2_GPIO),
+         gpio_get_level(HID_BUTTON_3_GPIO));
+
+ESP_LOGI(TAG, "Entering deep sleep...");
+
+esp_deep_sleep_start();
 }
 
 void hid_buttons_init(esp_hidd_dev_t *hid_dev)
