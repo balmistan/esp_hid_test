@@ -124,6 +124,8 @@ esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_buttons.c.obj: \
  /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/sys/string.h \
  /home/daniele/esp-idf/components/log/include/esp_log_attr.h \
  /home/daniele/esp-idf/components/log/include/esp_private/log_attr.h \
+ /home/daniele/esp-idf/components/esp_hw_support/include/esp_sleep.h \
+ /home/daniele/esp-idf/components/esp_timer/include/esp_timer.h \
  /home/daniele/esp_hid_test/main/hid/hid_keymap.h \
  /home/daniele/esp_hid_test/main/hid/hid_keyboard.h \
  /home/daniele/esp_hid_test/main/hid/hid_mouse.h

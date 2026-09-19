@@ -392,6 +392,7 @@ esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_buttons.c.obj: /home/daniele/esp_
   /home/daniele/esp-idf/components/esp_hw_support/include/esp_intr_alloc.h \
   /home/daniele/esp-idf/components/esp_hw_support/include/esp_intr_types.h \
   /home/daniele/esp-idf/components/esp_hw_support/include/esp_memory_utils.h \
+  /home/daniele/esp-idf/components/esp_hw_support/include/esp_sleep.h \
   /home/daniele/esp-idf/components/esp_hw_support/include/spinlock.h \
   /home/daniele/esp-idf/components/esp_libc/platform_include/assert.h \
   /home/daniele/esp-idf/components/esp_libc/platform_include/esp_newlib.h \
@@ -403,6 +404,7 @@ esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_buttons.c.obj: /home/daniele/esp_
   /home/daniele/esp-idf/components/esp_rom/include/esp_rom_sys.h \
   /home/daniele/esp-idf/components/esp_system/include/esp_private/crosscore_int.h \
   /home/daniele/esp-idf/components/esp_system/include/esp_system.h \
+  /home/daniele/esp-idf/components/esp_timer/include/esp_timer.h \
   /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/FreeRTOS.h \
   /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/deprecated_definitions.h \
   /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/event_groups.h \
@@ -824,6 +826,8 @@ esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_mouse.c.obj: /home/daniele/esp_hi
 /home/daniele/esp-idf/components/xtensa/esp32s3/include/xtensa/config/core.h:
 
 /home/daniele/esp-idf/components/xtensa/esp32s3/include/xtensa/config/core-matmap.h:
+
+/home/daniele/esp-idf/components/esp_hw_support/include/esp_sleep.h:
 
 /home/daniele/esp-idf/components/xtensa/esp32s3/include/xtensa/config/core-isa.h:
 
