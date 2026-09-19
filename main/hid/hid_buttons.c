@@ -10,11 +10,10 @@
 #include "esp_sleep.h"
 #include "esp_timer.h"
 
-#include <string.h>
-
 #include "hid_keymap.h"
 #include "hid_keyboard.h"
 #include "hid_mouse.h"
+#include <string.h>
 
 static const char *TAG = "HID_BUTTONS";
 
@@ -24,12 +23,14 @@ static const char *TAG = "HID_BUTTONS";
 static esp_hidd_dev_t *s_hid_dev = NULL;
 
 /*
- * Button task handle.
+ * Task handle used by:
+ * - GPIO ISR
+ * - deep sleep timer
  */
 static TaskHandle_t s_button_task_handle = NULL;
 
 /*
- * Deep sleep inactivity timer.
+ * Deep sleep timer.
  */
 static esp_timer_handle_t s_sleep_timer = NULL;
 
@@ -38,92 +39,49 @@ static esp_timer_handle_t s_sleep_timer = NULL;
  * DEEP SLEEP CONFIGURATION
  * ============================================================
  *
- * TEST:
- *   2 minutes
+ * TEST: 2 minutes
  *
- * Later change to:
+ * Later, for 1 hour:
  *
- *   60ULL * 60ULL * 1000000ULL
- *
- * for 1 hour.
+ * #define DEEP_SLEEP_TIMEOUT_US \
+ *     (60ULL * 60ULL * 1000000ULL)
  */
-
 #define DEEP_SLEEP_TIMEOUT_US \
     (2ULL * 60ULL * 1000000ULL)
 
-
 /*
- * ============================================================
- * DEEP SLEEP
- * ============================================================
+ * Notification bit reserved for the sleep timer.
+ *
+ * GPIO4 -> bit 4
+ * GPIO5 -> bit 5
+ * GPIO6 -> bit 6
+ *
+ * Bit 0 is therefore free for the timer.
  */
-
-static void enter_deep_sleep(void)
-{
-    ESP_LOGI(
-        TAG,
-        "No button activity for 2 minutes - entering deep sleep");
-
-    /*
-     * GPIO4, GPIO5 and GPIO6 are RTC GPIOs
-     * on ESP32-S3.
-     *
-     * Buttons are active LOW.
-     *
-     * Wake up when ANY of these GPIOs becomes LOW.
-     */
-    const uint64_t wakeup_mask =
-        (1ULL << HID_BUTTON_1_GPIO) |
-        (1ULL << HID_BUTTON_2_GPIO) |
-        (1ULL << HID_BUTTON_3_GPIO);
-
-    /*
-     * Keep RTC peripheral powered so that the
-     * GPIO pull-ups remain available during sleep.
-     */
-    ESP_ERROR_CHECK(
-        esp_sleep_pd_config(
-            ESP_PD_DOMAIN_RTC_PERIPH,
-            ESP_PD_OPTION_ON));
-
-    ESP_ERROR_CHECK(
-        esp_sleep_enable_ext1_wakeup(
-            wakeup_mask,
-            ESP_EXT1_WAKEUP_ANY_LOW));
-
-    ESP_LOGI(
-        TAG,
-        "Deep sleep wakeup mask: 0x%llX",
-        wakeup_mask);
-
-    ESP_LOGI(
-        TAG,
-        "Entering deep sleep...");
-
-    esp_deep_sleep_start();
-}
+#define SLEEP_TIMER_NOTIFICATION_BIT (1UL << 0)
 
 
 /*
  * ============================================================
- * SLEEP TIMER CALLBACK
+ * DEEP SLEEP TIMER CALLBACK
  * ============================================================
  */
 
 static void sleep_timer_callback(void *arg)
 {
+    ESP_LOGI(
+        TAG,
+        "Sleep timer callback fired");
+
     if (s_button_task_handle != NULL)
     {
-        /*
-         * Bit 0 is reserved for the sleep timer.
-         *
-         * GPIO4 = bit 4
-         * GPIO5 = bit 5
-         * GPIO6 = bit 6
-         */
+        ESP_LOGI(
+            TAG,
+            "Sending sleep notification to button task");
+
         xTaskNotify(
             s_button_task_handle,
-            1UL,
+            SLEEP_TIMER_NOTIFICATION_BIT,
             eSetBits);
     }
 }
@@ -131,7 +89,7 @@ static void sleep_timer_callback(void *arg)
 
 /*
  * ============================================================
- * RESTART INACTIVITY TIMER
+ * START / RESTART DEEP SLEEP TIMER
  * ============================================================
  */
 
@@ -139,19 +97,122 @@ static void restart_sleep_timer(void)
 {
     if (s_sleep_timer == NULL)
     {
+        ESP_LOGE(
+            TAG,
+            "Sleep timer handle is NULL");
+
         return;
     }
 
     /*
-     * Ignore the error if the timer is not currently running.
+     * Stop the previous timer.
+     *
+     * It is normal for this to fail if the timer is
+     * not currently running.
      */
-    esp_timer_stop(
-        s_sleep_timer);
+    esp_err_t stop_ret =
+        esp_timer_stop(s_sleep_timer);
 
-    ESP_ERROR_CHECK(
+    if (stop_ret != ESP_OK &&
+        stop_ret != ESP_ERR_INVALID_STATE)
+    {
+        ESP_LOGE(
+            TAG,
+            "esp_timer_stop failed: %s",
+            esp_err_to_name(stop_ret));
+    }
+
+    esp_err_t start_ret =
         esp_timer_start_once(
             s_sleep_timer,
-            DEEP_SLEEP_TIMEOUT_US));
+            DEEP_SLEEP_TIMEOUT_US);
+
+    if (start_ret != ESP_OK)
+    {
+        ESP_LOGE(
+            TAG,
+            "esp_timer_start_once failed: %s",
+            esp_err_to_name(start_ret));
+    }
+    else
+    {
+        ESP_LOGI(
+            TAG,
+            "Deep sleep timer started/restarted");
+    }
+}
+
+
+/*
+ * ============================================================
+ * ENTER DEEP SLEEP
+ * ============================================================
+ */
+
+static void enter_deep_sleep(void)
+{
+    ESP_LOGI(
+        TAG,
+        "No button activity for 2 minutes");
+
+    /*
+     * GPIO4, GPIO5 and GPIO6 are wake-up sources.
+     */
+    const uint64_t wakeup_mask =
+        (1ULL << HID_BUTTON_1_GPIO) |
+        (1ULL << HID_BUTTON_2_GPIO) |
+        (1ULL << HID_BUTTON_3_GPIO);
+
+    ESP_LOGI(
+        TAG,
+        "Deep sleep wakeup mask: 0x%llX",
+        wakeup_mask);
+
+    /*
+     * Keep RTC peripherals powered.
+     * EXT1 wake-up uses RTC GPIOs.
+     */
+    esp_err_t ret =
+        esp_sleep_pd_config(
+            ESP_PD_DOMAIN_RTC_PERIPH,
+            ESP_PD_OPTION_ON);
+
+    if (ret != ESP_OK)
+    {
+        ESP_LOGE(
+            TAG,
+            "esp_sleep_pd_config failed: %s",
+            esp_err_to_name(ret));
+    }
+
+    /*
+     * Buttons are active LOW.
+     *
+     * Wake when ANY of GPIO4/5/6 is LOW.
+     */
+    ret =
+        esp_sleep_enable_ext1_wakeup(
+            wakeup_mask,
+            ESP_EXT1_WAKEUP_ANY_LOW);
+
+    if (ret != ESP_OK)
+    {
+        ESP_LOGE(
+            TAG,
+            "esp_sleep_enable_ext1_wakeup failed: %s",
+            esp_err_to_name(ret));
+
+        return;
+    }
+
+    ESP_LOGI(
+        TAG,
+        "Entering deep sleep...");
+
+    /*
+     * Does not return.
+     */
+    esp_deep_sleep_start();
 }
 
 
@@ -173,44 +234,23 @@ void hid_buttons_init(esp_hidd_dev_t *hid_dev)
 
 /*
  * ============================================================
- * GPIO CONFIGURATION
+ * GPIO INTERRUPT
  * ============================================================
  */
-
-static void configure_button_gpio(uint8_t gpio)
-{
-    gpio_config_t io_conf = {
-        .pin_bit_mask = (1ULL << gpio),
-
-        .mode = GPIO_MODE_INPUT,
-
-        .pull_up_en = GPIO_PULLUP_ENABLE,
-
-        .pull_down_en = GPIO_PULLDOWN_DISABLE,
-
-        .intr_type = GPIO_INTR_NEGEDGE
-    };
-
-    ESP_ERROR_CHECK(
-        gpio_config(&io_conf));
-}
-
 
 /*
- * ============================================================
- * GPIO INTERRUPT HANDLER
- * ============================================================
+ * GPIO interrupt handler.
+ *
+ * IMPORTANT:
+ * No HID action is executed here.
+ * The ISR only wakes the button task.
  */
-
 static void IRAM_ATTR button_gpio_isr_handler(void *arg)
 {
     uint32_t gpio_num = (uint32_t)arg;
 
     BaseType_t higher_priority_task_woken = pdFALSE;
 
-    /*
-     * One notification bit per GPIO.
-     */
     xTaskNotifyFromISR(
         s_button_task_handle,
         (1UL << gpio_num),
@@ -221,6 +261,36 @@ static void IRAM_ATTR button_gpio_isr_handler(void *arg)
     {
         portYIELD_FROM_ISR();
     }
+}
+
+
+/*
+ * ============================================================
+ * GPIO CONFIGURATION
+ * ============================================================
+ */
+
+static void configure_button_gpio(uint8_t gpio)
+{
+    gpio_config_t io_conf = {
+        .pin_bit_mask = (1ULL << gpio),
+        .mode = GPIO_MODE_INPUT,
+
+        .pull_up_en = GPIO_PULLUP_ENABLE,
+        .pull_down_en = GPIO_PULLDOWN_DISABLE,
+
+        /*
+         * Buttons are active LOW:
+         *
+         * HIGH = released
+         * LOW  = pressed
+         *
+         * React to falling edge.
+         */
+        .intr_type = GPIO_INTR_NEGEDGE};
+
+    ESP_ERROR_CHECK(
+        gpio_config(&io_conf));
 }
 
 
@@ -243,18 +313,18 @@ static void execute_action(hid_action_t action)
 
     switch (action)
     {
-        /*
-         * ----------------------------------------------------
-         * GPIO4
-         *
-         * 1. MOVE CURSOR 100 PIXELS UP
-         * 2. LEFT CLICK 1 SECOND
-         * 3. ENTER
-         * 4. SEND 123654
-         * 5. WAIT 5 SECONDS
-         * 6. DELETE 6 CHARACTERS
-         * ----------------------------------------------------
-         */
+    /*
+     * --------------------------------------------------------
+     * GPIO4
+     *
+     * 1. MOVE CURSOR UP 100px
+     * 2. LEFT CLICK 1 SECOND
+     * 3. ENTER
+     * 4. SEND 123654
+     * 5. WAIT 5 SECONDS
+     * 6. DELETE 6 CHARACTERS
+     * --------------------------------------------------------
+     */
 
     case HID_ACTION_MOUSE_LEFT_CLICK_ENTER:
 
@@ -263,11 +333,8 @@ static void execute_action(hid_action_t action)
             "BUTTON ACTION: GPIO4 MACRO");
 
         /*
-         * ==================================================
          * MOVE CURSOR 100 PIXELS UP
-         * ==================================================
          */
-
         hid_mouse_send(
             s_hid_dev,
             0,
@@ -275,19 +342,12 @@ static void execute_action(hid_action_t action)
             -100,
             0);
 
-        /*
-         * Small pause to ensure the movement
-         * is sent before the click.
-         */
         vTaskDelay(
             pdMS_TO_TICKS(100));
 
         /*
-         * ==================================================
          * LEFT CLICK 1 SECOND
-         * ==================================================
          */
-
         hid_mouse_send(
             s_hid_dev,
             1,
@@ -295,10 +355,6 @@ static void execute_action(hid_action_t action)
             0,
             0);
 
-        /*
-         * Keep left mouse button pressed
-         * for 1 second.
-         */
         vTaskDelay(
             pdMS_TO_TICKS(1000));
 
@@ -313,11 +369,8 @@ static void execute_action(hid_action_t action)
             0);
 
         /*
-         * ==================================================
-         * SEND ENTER
-         * ==================================================
+         * ENTER
          */
-
         vTaskDelay(
             pdMS_TO_TICKS(100));
 
@@ -331,11 +384,8 @@ static void execute_action(hid_action_t action)
             pdMS_TO_TICKS(1000));
 
         /*
-         * ==================================================
          * SEND 123654
-         * ==================================================
          */
-
         send_keyboard('1');
 
         vTaskDelay(
@@ -364,20 +414,14 @@ static void execute_action(hid_action_t action)
         send_keyboard('4');
 
         /*
-         * ==================================================
          * WAIT 5 SECONDS
-         * ==================================================
          */
-
         vTaskDelay(
             pdMS_TO_TICKS(5000));
 
         /*
-         * ==================================================
          * DELETE 6 CHARACTERS
-         * ==================================================
          */
-
         for (int i = 0; i < 6; i++)
         {
             send_keyboard_key(
@@ -390,13 +434,13 @@ static void execute_action(hid_action_t action)
         break;
 
 
-        /*
-         * ----------------------------------------------------
-         * GPIO5
-         *
-         * SEND 123654
-         * ----------------------------------------------------
-         */
+    /*
+     * --------------------------------------------------------
+     * GPIO5
+     *
+     * SEND 123654
+     * --------------------------------------------------------
+     */
 
     case HID_ACTION_SEND_123654:
 
@@ -434,19 +478,19 @@ static void execute_action(hid_action_t action)
         break;
 
 
-        /*
-         * ----------------------------------------------------
-         * GPIO6
-         *
-         * DELETE 2 CHARACTERS AND SEND THE PIN
-         * ----------------------------------------------------
-         */
+    /*
+     * --------------------------------------------------------
+     * GPIO6
+     *
+     * DELETE 2 CHARACTERS AND SEND PIN
+     * --------------------------------------------------------
+     */
 
     case HID_ACTION_DELETE_CHARS_AND_PINSEND:
-
+    {
         ESP_LOGI(
             TAG,
-            "BUTTON ACTION: DELETE 2 CHARACTERS AND SEND THE PIN");
+            "BUTTON ACTION: DELETE 2 CHARACTERS + PIN");
 
         int delay = 20;
         char pin[] = "12365400";
@@ -464,26 +508,25 @@ static void execute_action(hid_action_t action)
             pdMS_TO_TICKS(1000));
 
         /*
-         * SEND THE PIN
+         * SEND PIN
          */
-
         for (int i = 0; i < strlen(pin); i++)
         {
             vTaskDelay(
                 pdMS_TO_TICKS(delay));
 
-            send_keyboard(
-                pin[i]);
+            send_keyboard(pin[i]);
         }
 
         break;
+    }
 
 
-        /*
-         * ----------------------------------------------------
-         * NONE
-         * ----------------------------------------------------
-         */
+    /*
+     * --------------------------------------------------------
+     * NONE
+     * --------------------------------------------------------
+     */
 
     case HID_ACTION_NONE:
 
@@ -507,7 +550,10 @@ void hid_buttons_task(void *pvParameters)
         "HID BUTTON TASK STARTED");
 
     /*
-     * Save task handle.
+     * Save task handle so:
+     *
+     * - GPIO ISR can wake this task
+     * - sleep timer can wake this task
      */
     s_button_task_handle =
         xTaskGetCurrentTaskHandle();
@@ -519,7 +565,7 @@ void hid_buttons_task(void *pvParameters)
      * ========================================================
      */
 
-    const esp_timer_create_args_t timer_args = {
+    const esp_timer_create_args_t sleep_timer_args = {
         .callback = sleep_timer_callback,
         .arg = NULL,
         .dispatch_method = ESP_TIMER_TASK,
@@ -527,16 +573,30 @@ void hid_buttons_task(void *pvParameters)
         .skip_unhandled_events = false
     };
 
-    ESP_ERROR_CHECK(
+    esp_err_t timer_ret =
         esp_timer_create(
-            &timer_args,
-            &s_sleep_timer));
+            &sleep_timer_args,
+            &s_sleep_timer);
+
+    if (timer_ret != ESP_OK)
+    {
+        ESP_LOGE(
+            TAG,
+            "esp_timer_create failed: %s",
+            esp_err_to_name(timer_ret));
+
+        s_sleep_timer = NULL;
+    }
+    else
+    {
+        ESP_LOGI(
+            TAG,
+            "Deep sleep timer created");
+    }
 
 
     /*
-     * ========================================================
-     * CONFIGURE GPIOs
-     * ========================================================
+     * Configure GPIOs.
      */
 
     configure_button_gpio(
@@ -550,38 +610,34 @@ void hid_buttons_task(void *pvParameters)
 
 
     /*
-     * ========================================================
-     * INSTALL GPIO ISR SERVICE
-     * ========================================================
+     * Install GPIO ISR service.
      */
+    esp_err_t ret =
+        gpio_install_isr_service(0);
 
-    ESP_ERROR_CHECK(
-        gpio_install_isr_service(0));
+    if (ret != ESP_OK &&
+        ret != ESP_ERR_INVALID_STATE)
+    {
+        ESP_ERROR_CHECK(ret);
+    }
 
 
     /*
-     * GPIO4
+     * Register individual handlers.
      */
+
     ESP_ERROR_CHECK(
         gpio_isr_handler_add(
             HID_BUTTON_1_GPIO,
             button_gpio_isr_handler,
             (void *)HID_BUTTON_1_GPIO));
 
-
-    /*
-     * GPIO5
-     */
     ESP_ERROR_CHECK(
         gpio_isr_handler_add(
             HID_BUTTON_2_GPIO,
             button_gpio_isr_handler,
             (void *)HID_BUTTON_2_GPIO));
 
-
-    /*
-     * GPIO6
-     */
     ESP_ERROR_CHECK(
         gpio_isr_handler_add(
             HID_BUTTON_3_GPIO,
@@ -599,41 +655,53 @@ void hid_buttons_task(void *pvParameters)
 
     ESP_LOGI(
         TAG,
-        "GPIO6 = DELETE 2 + 12365400");
-
-
-    /*
-     * ========================================================
-     * START 2-MINUTE INACTIVITY TIMER
-     * ========================================================
-     */
-
-    restart_sleep_timer();
+        "GPIO6 = DELETE 2 CHARACTERS + PIN");
 
     ESP_LOGI(
         TAG,
-        "Deep sleep inactivity timer started: 2 minutes");
+        "GPIO interrupt mode active");
 
 
     /*
      * ========================================================
-     * EVENT LOOP
+     * START DEEP SLEEP TIMER
      * ========================================================
-     *
-     * The task now sleeps indefinitely.
-     *
-     * It wakes only when:
-     *
-     *   bit 0 = inactivity timer expired
-     *   bit 4 = GPIO4 pressed
-     *   bit 5 = GPIO5 pressed
-     *   bit 6 = GPIO6 pressed
+     */
+
+    if (s_sleep_timer != NULL)
+    {
+        restart_sleep_timer();
+
+        ESP_LOGI(
+            TAG,
+            "Deep sleep timer started: 2 minutes");
+    }
+    else
+    {
+        ESP_LOGE(
+            TAG,
+            "Deep sleep timer NOT started");
+    }
+
+
+    /*
+     * ========================================================
+     * WAIT FOR BUTTON INTERRUPTS / TIMER
+     * ========================================================
      */
 
     while (1)
     {
         uint32_t notification = 0;
 
+        /*
+         * Wait indefinitely until:
+         *
+         * bit 0 = sleep timer
+         * bit 4 = GPIO4
+         * bit 5 = GPIO5
+         * bit 6 = GPIO6
+         */
         xTaskNotifyWait(
             0,
             UINT32_MAX,
@@ -642,12 +710,24 @@ void hid_buttons_task(void *pvParameters)
 
 
         /*
+         * Log received notification.
+         *
+         * Useful for debugging.
+         */
+        ESP_LOGI(
+            TAG,
+            "Task notification received: 0x%08lX",
+            (unsigned long)notification);
+
+
+        /*
          * ----------------------------------------------------
-         * 2 MINUTES WITHOUT BUTTON ACTIVITY
+         * DEEP SLEEP TIMER
          * ----------------------------------------------------
          */
 
-        if (notification & 1UL)
+        if (notification &
+            SLEEP_TIMER_NOTIFICATION_BIT)
         {
             enter_deep_sleep();
         }
@@ -663,22 +743,25 @@ void hid_buttons_task(void *pvParameters)
             (1UL << HID_BUTTON_1_GPIO))
         {
             /*
-             * Button activity -> restart inactivity timer.
+             * Button activity resets the inactivity timer.
              */
             restart_sleep_timer();
 
             /*
-             * Simple debounce.
+             * Confirm button is LOW.
              */
-            vTaskDelay(
-                pdMS_TO_TICKS(50));
-
             if (gpio_get_level(
                     HID_BUTTON_1_GPIO) == 0)
             {
                 execute_action(
                     hid_keymap_get_action(
                         HID_BUTTON_1_GPIO));
+
+                /*
+                 * Simple debounce.
+                 */
+                vTaskDelay(
+                    pdMS_TO_TICKS(50));
             }
         }
 
@@ -693,15 +776,9 @@ void hid_buttons_task(void *pvParameters)
             (1UL << HID_BUTTON_2_GPIO))
         {
             /*
-             * Button activity -> restart inactivity timer.
+             * Button activity resets the inactivity timer.
              */
             restart_sleep_timer();
-
-            /*
-             * Simple debounce.
-             */
-            vTaskDelay(
-                pdMS_TO_TICKS(50));
 
             if (gpio_get_level(
                     HID_BUTTON_2_GPIO) == 0)
@@ -709,6 +786,9 @@ void hid_buttons_task(void *pvParameters)
                 execute_action(
                     hid_keymap_get_action(
                         HID_BUTTON_2_GPIO));
+
+                vTaskDelay(
+                    pdMS_TO_TICKS(50));
             }
         }
 
@@ -723,15 +803,9 @@ void hid_buttons_task(void *pvParameters)
             (1UL << HID_BUTTON_3_GPIO))
         {
             /*
-             * Button activity -> restart inactivity timer.
+             * Button activity resets the inactivity timer.
              */
             restart_sleep_timer();
-
-            /*
-             * Simple debounce.
-             */
-            vTaskDelay(
-                pdMS_TO_TICKS(50));
 
             if (gpio_get_level(
                     HID_BUTTON_3_GPIO) == 0)
@@ -739,6 +813,9 @@ void hid_buttons_task(void *pvParameters)
                 execute_action(
                     hid_keymap_get_action(
                         HID_BUTTON_3_GPIO));
+
+                vTaskDelay(
+                    pdMS_TO_TICKS(50));
             }
         }
     }
