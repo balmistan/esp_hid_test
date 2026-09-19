@@ -100,6 +100,7 @@ esp-idf/main/CMakeFiles/__idf_main.dir/app_main.c.obj: /home/daniele/esp_hid_tes
   /home/daniele/esp-idf/components/esp_hw_support/include/esp_intr_alloc.h \
   /home/daniele/esp-idf/components/esp_hw_support/include/esp_intr_types.h \
   /home/daniele/esp-idf/components/esp_hw_support/include/esp_memory_utils.h \
+  /home/daniele/esp-idf/components/esp_hw_support/include/esp_sleep.h \
   /home/daniele/esp-idf/components/esp_hw_support/include/spinlock.h \
   /home/daniele/esp-idf/components/esp_libc/platform_include/assert.h \
   /home/daniele/esp-idf/components/esp_libc/platform_include/esp_newlib.h \
@@ -826,10 +827,6 @@ esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_mouse.c.obj: /home/daniele/esp_hi
 
 /home/daniele/esp-idf/components/xtensa/esp32s3/include/xtensa/config/core-matmap.h:
 
-/home/daniele/esp-idf/components/esp_hw_support/include/esp_sleep.h:
-
-/home/daniele/esp-idf/components/xtensa/esp32s3/include/xtensa/config/core-isa.h:
-
 /home/daniele/esp-idf/components/soc/include/soc/soc_caps_eval.h:
 
 /home/daniele/esp-idf/components/soc/esp32s3/include/soc/soc.h:
@@ -875,6 +872,8 @@ esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_mouse.c.obj: /home/daniele/esp_hi
 /home/daniele/esp-idf/components/freertos/config/include/freertos/FreeRTOSConfig.h:
 
 /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos/portmacro.h:
+
+/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos/portbenchmark.h:
 
 /home/daniele/esp_hid_test/main/hid/hid_mouse.h:
 
@@ -1024,6 +1023,10 @@ esp-idf/main/CMakeFiles/__idf_main.dir/hid/hid_mouse.c.obj: /home/daniele/esp_hi
 
 /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/sys/syslimits.h:
 
+/home/daniele/esp-idf/components/xtensa/esp32s3/include/xtensa/config/core-isa.h:
+
+/home/daniele/esp-idf/components/esp_hw_support/include/esp_sleep.h:
+
 config/sdkconfig.h:
 
 /home/daniele/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/picolibc/include/machine/ieeefp.h:
@@ -1165,5 +1168,3 @@ config/sdkconfig.h:
 /home/daniele/esp_hid_test/main/hid/hid_keyboard.c:
 
 /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/semphr.h:
-
-/home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos/portbenchmark.h:

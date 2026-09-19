@@ -13,6 +13,8 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
+#include "esp_sleep.h"
+
 #include "esp_system.h"
 #include "esp_log.h"
 #include "nvs_flash.h"
@@ -716,8 +718,24 @@ void ble_store_config_init(void);
 
 void app_main(void)
 {
+
     esp_err_t ret;
 
+
+/**/
+    esp_sleep_wakeup_cause_t wakeup_cause = esp_sleep_get_wakeup_cause();
+
+    ESP_LOGI("SLEEP", "Wakeup cause: %d", wakeup_cause);
+
+    if (wakeup_cause == ESP_SLEEP_WAKEUP_EXT1)
+    {
+        uint64_t wakeup_status = esp_sleep_get_ext1_wakeup_status();
+
+        ESP_LOGI("SLEEP",
+                 "EXT1 wakeup GPIO mask: 0x%llX",
+                 wakeup_status);
+    }
+/**/
 
 #if HID_DEV_MODE == HIDD_IDLE_MODE
 

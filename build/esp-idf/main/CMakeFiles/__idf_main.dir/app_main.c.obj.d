@@ -100,6 +100,9 @@ esp-idf/main/CMakeFiles/__idf_main.dir/app_main.c.obj: \
  /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/stream_buffer.h \
  /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/event_groups.h \
  /home/daniele/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/timers.h \
+ /home/daniele/esp-idf/components/esp_hw_support/include/esp_sleep.h \
+ /home/daniele/esp-idf/components/esp_hal_gpio/include/hal/gpio_types.h \
+ /home/daniele/esp-idf/components/esp_hal_gpio/esp32s3/include/soc/gpio_num.h \
  /home/daniele/esp-idf/components/log/include/esp_log.h \
  /home/daniele/esp-idf/components/log/include/esp_log_config.h \
  /home/daniele/esp-idf/components/log/include/esp_log_level.h \
@@ -116,8 +119,6 @@ esp-idf/main/CMakeFiles/__idf_main.dir/app_main.c.obj: \
  /home/daniele/esp-idf/components/esp_partition/include/esp_partition.h \
  /home/daniele/esp-idf/components/esp_blockdev/include/esp_blockdev.h \
  /home/daniele/esp-idf/components/esp_driver_gpio/include/driver/gpio.h \
- /home/daniele/esp-idf/components/esp_hal_gpio/include/hal/gpio_types.h \
- /home/daniele/esp-idf/components/esp_hal_gpio/esp32s3/include/soc/gpio_num.h \
  /home/daniele/esp-idf/components/esp_rom/include/esp_rom_gpio.h \
  /home/daniele/esp-idf/components/soc/esp32s3/include/soc/gpio_pins.h \
  /home/daniele/esp-idf/components/esp_driver_gpio/include/driver/gpio_etm.h \
