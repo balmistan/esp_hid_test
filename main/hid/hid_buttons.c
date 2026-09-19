@@ -12,12 +12,19 @@
 #include "hid_keyboard.h"
 #include "hid_mouse.h"
 
+#include <string.h>
+
 static const char *TAG = "HID_BUTTONS";
 
 /*
  * HID device used by this module.
  */
 static esp_hidd_dev_t *s_hid_dev = NULL;
+
+/*
+ * Task handle used by the GPIO ISR to wake the button task.
+ */
+static TaskHandle_t s_button_task_handle = NULL;
 
 /*
  * ============================================================
@@ -32,6 +39,37 @@ void hid_buttons_init(esp_hidd_dev_t *hid_dev)
     ESP_LOGI(
         TAG,
         "HID buttons initialized");
+}
+
+/*
+ * ============================================================
+ * GPIO INTERRUPT
+ * ============================================================
+ */
+
+/*
+ * GPIO interrupt handler.
+ *
+ * IMPORTANT:
+ * Do not execute HID actions here.
+ * The ISR only wakes the button task.
+ */
+static void IRAM_ATTR button_gpio_isr_handler(void *arg)
+{
+    uint32_t gpio_num = (uint32_t)arg;
+
+    BaseType_t higher_priority_task_woken = pdFALSE;
+
+    xTaskNotifyFromISR(
+        s_button_task_handle,
+        gpio_num,
+        eSetBits,
+        &higher_priority_task_woken);
+
+    if (higher_priority_task_woken)
+    {
+        portYIELD_FROM_ISR();
+    }
 }
 
 /*
@@ -51,7 +89,15 @@ static void configure_button_gpio(uint8_t gpio)
 
         .pull_down_en = GPIO_PULLDOWN_DISABLE,
 
-        .intr_type = GPIO_INTR_DISABLE};
+        /*
+         * Buttons are active LOW:
+         *
+         * HIGH = released
+         * LOW  = pressed
+         *
+         * Therefore we react to the falling edge.
+         */
+        .intr_type = GPIO_INTR_NEGEDGE};
 
     ESP_ERROR_CHECK(
         gpio_config(&io_conf));
@@ -97,7 +143,7 @@ static void execute_action(hid_action_t action)
 
         /*
          * ==================================================
-         * 2. MOVE CURSOR 100 PIXELS UP
+         * MOVE CURSOR 100 PIXELS UP
          * ==================================================
          */
 
@@ -108,16 +154,12 @@ static void execute_action(hid_action_t action)
             -100,
             0);
 
-        /*
-         * Small pause to ensure the movement
-         * is sent before the click.
-         */
         vTaskDelay(
             pdMS_TO_TICKS(100));
 
         /*
          * ==================================================
-         * 3. LEFT CLICK 1 SECOND
+         * LEFT CLICK 1 SECOND
          * ==================================================
          */
 
@@ -128,16 +170,13 @@ static void execute_action(hid_action_t action)
             0,
             0);
 
-        /*
-         * Keep left mouse button pressed
-         * for 1 second.
-         */
         vTaskDelay(
             pdMS_TO_TICKS(1000));
 
         /*
          * Release left mouse button.
          */
+
         hid_mouse_send(
             s_hid_dev,
             0,
@@ -147,7 +186,7 @@ static void execute_action(hid_action_t action)
 
         /*
          * ==================================================
-         * 1. SEND ENTER
+         * SEND ENTER
          * ==================================================
          */
 
@@ -160,12 +199,13 @@ static void execute_action(hid_action_t action)
         /*
          * Pause before sending characters.
          */
+
         vTaskDelay(
             pdMS_TO_TICKS(1000));
 
         /*
          * ==================================================
-         * 4. SEND 123654
+         * SEND 123654
          * ==================================================
          */
 
@@ -198,7 +238,7 @@ static void execute_action(hid_action_t action)
 
         /*
          * ==================================================
-         * 5. WAIT 5 SECONDS
+         * WAIT 5 SECONDS
          * ==================================================
          */
 
@@ -207,7 +247,7 @@ static void execute_action(hid_action_t action)
 
         /*
          * ==================================================
-         * 6. DELETE 6 CHARACTERS
+         * DELETE 6 CHARACTERS
          * ==================================================
          */
 
@@ -274,7 +314,7 @@ static void execute_action(hid_action_t action)
          */
 
     case HID_ACTION_DELETE_CHARS_AND_PINSEND:
-
+    {
         ESP_LOGI(
             TAG,
             "BUTTON ACTION: DELETE 2 CHARACTERS AND SEND THE PIN");
@@ -283,35 +323,31 @@ static void execute_action(hid_action_t action)
         char pin[] = "12365400";
 
         send_keyboard_key(
-                0x2A);
+            0x2A);
 
-            vTaskDelay(
-                pdMS_TO_TICKS(1000));
+        vTaskDelay(
+            pdMS_TO_TICKS(1000));
 
-                send_keyboard_key(
-                0x2A);
-                vTaskDelay(
-                pdMS_TO_TICKS(1000));
-        
+        send_keyboard_key(
+            0x2A);
 
-        /*DELETE CHARS*/
-/*
+        vTaskDelay(
+            pdMS_TO_TICKS(1000));
+
+        /*
+         * SEND THE PIN
+         */
+
         for (int i = 0; i < strlen(pin); i++)
         {
-            send_keyboard_key(
-                0x2A);
-
             vTaskDelay(
                 pdMS_TO_TICKS(delay));
-*/
-        /*SEND THE PIN*/
 
-        for (int i = 0; i < strlen(pin); i++)
-        {
-            vTaskDelay(pdMS_TO_TICKS(delay));
             send_keyboard(pin[i]);
         }
+
         break;
+    }
 
         /*
          * ----------------------------------------------------
@@ -340,6 +376,11 @@ void hid_buttons_task(void *pvParameters)
         "HID BUTTON TASK STARTED");
 
     /*
+     * Save task handle so the ISR can wake this task.
+     */
+    s_button_task_handle = xTaskGetCurrentTaskHandle();
+
+    /*
      * Configure GPIOs.
      */
 
@@ -352,6 +393,42 @@ void hid_buttons_task(void *pvParameters)
     configure_button_gpio(
         HID_BUTTON_3_GPIO);
 
+    /*
+     * Install GPIO ISR service.
+     *
+     * No special ISR flags are required here.
+     */
+    esp_err_t ret =
+        gpio_install_isr_service(0);
+
+    if (ret != ESP_OK &&
+        ret != ESP_ERR_INVALID_STATE)
+    {
+        ESP_ERROR_CHECK(ret);
+    }
+
+    /*
+     * Register individual handlers.
+     */
+
+    ESP_ERROR_CHECK(
+        gpio_isr_handler_add(
+            HID_BUTTON_1_GPIO,
+            button_gpio_isr_handler,
+            (void *)HID_BUTTON_1_GPIO));
+
+    ESP_ERROR_CHECK(
+        gpio_isr_handler_add(
+            HID_BUTTON_2_GPIO,
+            button_gpio_isr_handler,
+            (void *)HID_BUTTON_2_GPIO));
+
+    ESP_ERROR_CHECK(
+        gpio_isr_handler_add(
+            HID_BUTTON_3_GPIO,
+            button_gpio_isr_handler,
+            (void *)HID_BUTTON_3_GPIO));
+
     ESP_LOGI(
         TAG,
         "GPIO4 = ENTER + MOVE UP 100px + CLICK 1s + 123654 + DELETE");
@@ -362,32 +439,33 @@ void hid_buttons_task(void *pvParameters)
 
     ESP_LOGI(
         TAG,
-        "GPIO6 = DELETE 6 CHARACTERS");
+        "GPIO6 = DELETE 2 CHARACTERS + PIN");
+
+    ESP_LOGI(
+        TAG,
+        "GPIO interrupt mode active");
 
     /*
-     * GPIOs use internal pull-ups:
-     *
-     * HIGH = not pressed
-     * LOW  = pressed
+     * ========================================================
+     * WAIT FOR BUTTON INTERRUPTS
+     * ========================================================
      */
-
-    int last_state_1 = 1;
-    int last_state_2 = 1;
-    int last_state_3 = 1;
 
     while (1)
     {
-        int state_1 =
-            gpio_get_level(
-                HID_BUTTON_1_GPIO);
+        uint32_t notification = 0;
 
-        int state_2 =
-            gpio_get_level(
-                HID_BUTTON_2_GPIO);
-
-        int state_3 =
-            gpio_get_level(
-                HID_BUTTON_3_GPIO);
+        /*
+         * Sleep indefinitely until a GPIO interrupt
+         * wakes this task.
+         *
+         * This replaces the 100 ms polling loop.
+         */
+        xTaskNotifyWait(
+            0,
+            UINT32_MAX,
+            &notification,
+            portMAX_DELAY);
 
         /*
          * ----------------------------------------------------
@@ -395,15 +473,27 @@ void hid_buttons_task(void *pvParameters)
          * ----------------------------------------------------
          */
 
-        if (state_1 == 0 &&
-            last_state_1 == 1)
+        if (notification &
+            (1UL << HID_BUTTON_1_GPIO))
         {
-            execute_action(
-                hid_keymap_get_action(
-                    HID_BUTTON_1_GPIO));
+            /*
+             * Confirm that the button is actually LOW.
+             *
+             * This also helps reject some bounce events.
+             */
+            if (gpio_get_level(
+                    HID_BUTTON_1_GPIO) == 0)
+            {
+                execute_action(
+                    hid_keymap_get_action(
+                        HID_BUTTON_1_GPIO));
 
-            vTaskDelay(
-                pdMS_TO_TICKS(50));
+                /*
+                 * Simple debounce.
+                 */
+                vTaskDelay(
+                    pdMS_TO_TICKS(50));
+            }
         }
 
         /*
@@ -412,15 +502,19 @@ void hid_buttons_task(void *pvParameters)
          * ----------------------------------------------------
          */
 
-        if (state_2 == 0 &&
-            last_state_2 == 1)
+        if (notification &
+            (1UL << HID_BUTTON_2_GPIO))
         {
-            execute_action(
-                hid_keymap_get_action(
-                    HID_BUTTON_2_GPIO));
+            if (gpio_get_level(
+                    HID_BUTTON_2_GPIO) == 0)
+            {
+                execute_action(
+                    hid_keymap_get_action(
+                        HID_BUTTON_2_GPIO));
 
-            vTaskDelay(
-                pdMS_TO_TICKS(50));
+                vTaskDelay(
+                    pdMS_TO_TICKS(50));
+            }
         }
 
         /*
@@ -429,30 +523,19 @@ void hid_buttons_task(void *pvParameters)
          * ----------------------------------------------------
          */
 
-        if (state_3 == 0 &&
-            last_state_3 == 1)
+        if (notification &
+            (1UL << HID_BUTTON_3_GPIO))
         {
-            execute_action(
-                hid_keymap_get_action(
-                    HID_BUTTON_3_GPIO));
+            if (gpio_get_level(
+                    HID_BUTTON_3_GPIO) == 0)
+            {
+                execute_action(
+                    hid_keymap_get_action(
+                        HID_BUTTON_3_GPIO));
 
-            vTaskDelay(
-                pdMS_TO_TICKS(50));
+                vTaskDelay(
+                    pdMS_TO_TICKS(50));
+            }
         }
-
-        /*
-         * Save current states.
-         */
-
-        last_state_1 = state_1;
-        last_state_2 = state_2;
-        last_state_3 = state_3;
-
-        /*
-         * Poll every 10 ms.
-         */
-
-        vTaskDelay(
-            pdMS_TO_TICKS(10));
     }
 }
