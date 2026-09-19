@@ -723,18 +723,30 @@ void app_main(void)
 
 
 /**/
-    esp_sleep_wakeup_cause_t wakeup_cause = esp_sleep_get_wakeup_cause();
+   ESP_LOGI("SLEEP", "========== APP_MAIN START ==========");
 
-    ESP_LOGI("SLEEP", "Wakeup cause: %d", wakeup_cause);
+    uint32_t wakeup_causes = esp_sleep_get_wakeup_causes();
 
-    if (wakeup_cause == ESP_SLEEP_WAKEUP_EXT1)
+    esp_reset_reason_t reset_reason = esp_reset_reason();
+
+    ESP_LOGI("SLEEP",
+             "Wakeup causes: 0x%08" PRIX32,
+             wakeup_causes);
+
+    ESP_LOGI("SLEEP",
+             "Reset reason: %d",
+             reset_reason);
+
+    if (wakeup_causes & ESP_SLEEP_WAKEUP_EXT1)
     {
-        uint64_t wakeup_status = esp_sleep_get_ext1_wakeup_status();
+        uint64_t wakeup_status =
+            esp_sleep_get_ext1_wakeup_status();
 
         ESP_LOGI("SLEEP",
                  "EXT1 wakeup GPIO mask: 0x%llX",
-                 wakeup_status);
+                 (unsigned long long)wakeup_status);
     }
+
 /**/
 
 #if HID_DEV_MODE == HIDD_IDLE_MODE
