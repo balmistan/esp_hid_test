@@ -27,11 +27,16 @@ static void enter_deep_sleep(void)
     ESP_LOGI(TAG, "No button activity for 30 sec. - entering deep sleep");
 
     /*
-     * TEST:
-     * Wake from Deep Sleep only with GPIO4 going LOW.
+     * Wake from Deep Sleep when any button goes LOW.
+     *
+     * GPIO4 = button 1
+     * GPIO5 = button 2
+     * GPIO6 = button 3
      */
     uint64_t wakeup_mask =
-        (1ULL << HID_BUTTON_1_GPIO);
+        (1ULL << HID_BUTTON_1_GPIO) |
+        (1ULL << HID_BUTTON_2_GPIO) |
+        (1ULL << HID_BUTTON_3_GPIO);
 
     ESP_LOGI(
         TAG,
@@ -48,13 +53,29 @@ static void enter_deep_sleep(void)
             wakeup_mask,
             ESP_EXT1_WAKEUP_ANY_LOW));
 
-    ESP_LOGI(TAG, "GPIO4 level before sleep: %d",
-             gpio_get_level(HID_BUTTON_1_GPIO));
+    ESP_LOGI(
+        TAG,
+        "GPIO levels before sleep: GPIO4=%d GPIO5=%d GPIO6=%d",
+        gpio_get_level(HID_BUTTON_1_GPIO),
+        gpio_get_level(HID_BUTTON_2_GPIO),
+        gpio_get_level(HID_BUTTON_3_GPIO));
+
+    /*
+     * Keep all three GPIOs in their current state during Deep Sleep.
+     * Buttons are connected to GND and use the internal pull-up.
+     */
+    ESP_ERROR_CHECK(
+        gpio_hold_en(HID_BUTTON_1_GPIO));
+
+    ESP_ERROR_CHECK(
+        gpio_hold_en(HID_BUTTON_2_GPIO));
+
+    ESP_ERROR_CHECK(
+        gpio_hold_en(HID_BUTTON_3_GPIO));
+
+    gpio_deep_sleep_hold_en();
 
     ESP_LOGI(TAG, "Entering deep sleep...");
-
-    gpio_hold_en(HID_BUTTON_1_GPIO);
-    gpio_deep_sleep_hold_en();
 
     esp_deep_sleep_start();
 }
@@ -230,6 +251,19 @@ void hid_buttons_task(void *pvParameters)
     configure_button_gpio(HID_BUTTON_1_GPIO);
     configure_button_gpio(HID_BUTTON_2_GPIO);
     configure_button_gpio(HID_BUTTON_3_GPIO);
+
+    uint32_t wakeup_causes = esp_sleep_get_wakeup_causes();
+
+if (wakeup_causes & ESP_SLEEP_WAKEUP_EXT1)
+{
+    uint64_t wakeup_status =
+        esp_sleep_get_ext1_wakeup_status();
+
+    ESP_LOGI(
+        TAG,
+        "Wake-up from EXT1: GPIO mask = 0x%llX",
+        (unsigned long long)wakeup_status);
+}
 
     ESP_ERROR_CHECK(gpio_install_isr_service(0));
 
