@@ -1,3 +1,4 @@
+
 #include "hid_buttons.h"
 
 #include "freertos/FreeRTOS.h"
@@ -252,20 +253,28 @@ void hid_buttons_task(void *pvParameters)
     configure_button_gpio(HID_BUTTON_2_GPIO);
     configure_button_gpio(HID_BUTTON_3_GPIO);
 
-    uint32_t wakeup_causes = esp_sleep_get_wakeup_causes();
+    /*
+     * Check whether the ESP32 was woken from Deep Sleep
+     * by one of the three buttons.
+     */
+    uint64_t wakeup_status = 0;
 
-if (wakeup_causes & ESP_SLEEP_WAKEUP_EXT1)
-{
-    uint64_t wakeup_status =
-        esp_sleep_get_ext1_wakeup_status();
+    uint32_t wakeup_causes =
+        esp_sleep_get_wakeup_causes();
 
-    ESP_LOGI(
-        TAG,
-        "Wake-up from EXT1: GPIO mask = 0x%llX",
-        (unsigned long long)wakeup_status);
-}
+    if (wakeup_causes & ESP_SLEEP_WAKEUP_EXT1)
+    {
+        wakeup_status =
+            esp_sleep_get_ext1_wakeup_status();
 
-    ESP_ERROR_CHECK(gpio_install_isr_service(0));
+        ESP_LOGI(
+            TAG,
+            "Wake-up from EXT1: GPIO mask = 0x%llX",
+            (unsigned long long)wakeup_status);
+    }
+
+    ESP_ERROR_CHECK(
+        gpio_install_isr_service(0));
 
     ESP_ERROR_CHECK(
         gpio_isr_handler_add(
@@ -292,6 +301,40 @@ if (wakeup_causes & ESP_SLEEP_WAKEUP_EXT1)
     ESP_LOGI(TAG, "GPIO5 = 123654");
     ESP_LOGI(TAG, "GPIO6 = DELETE 2 + 12365400");
     ESP_LOGI(TAG, "Deep sleep timeout started: 30 sec");
+
+    /*
+     * If a button caused the wake-up, execute its action now.
+     *
+     * IMPORTANT:
+     * Do not check gpio_get_level() here.
+     * The button may already have been released while the ESP32
+     * was booting. The EXT1 wake-up status itself confirms
+     * which button caused the wake-up.
+     */
+    if (wakeup_status & (1ULL << HID_BUTTON_1_GPIO))
+    {
+        ESP_LOGI(TAG, "Wake-up caused by GPIO4");
+
+        execute_action(
+            hid_keymap_get_action(
+                HID_BUTTON_1_GPIO));
+    }
+    else if (wakeup_status & (1ULL << HID_BUTTON_2_GPIO))
+    {
+        ESP_LOGI(TAG, "Wake-up caused by GPIO5");
+
+        execute_action(
+            hid_keymap_get_action(
+                HID_BUTTON_2_GPIO));
+    }
+    else if (wakeup_status & (1ULL << HID_BUTTON_3_GPIO))
+    {
+        ESP_LOGI(TAG, "Wake-up caused by GPIO6");
+
+        execute_action(
+            hid_keymap_get_action(
+                HID_BUTTON_3_GPIO));
+    }
 
     while (1)
     {
@@ -350,3 +393,4 @@ if (wakeup_causes & ESP_SLEEP_WAKEUP_EXT1)
         }
     }
 }
+
