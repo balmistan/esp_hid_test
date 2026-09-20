@@ -24,12 +24,19 @@ static TaskHandle_t s_button_task_handle = NULL;
 
 static void enter_deep_sleep(void)
 {
-    ESP_LOGI(TAG, "No button activity for 2 minutes - entering deep sleep");
+    ESP_LOGI(TAG, "No button activity for 30 sec. - entering deep sleep");
 
-    const uint64_t wakeup_mask =
-        (1ULL << HID_BUTTON_1_GPIO) |
-        (1ULL << HID_BUTTON_2_GPIO) |
-        (1ULL << HID_BUTTON_3_GPIO);
+    /*
+     * TEST:
+     * Wake from Deep Sleep only with GPIO4 going LOW.
+     */
+    uint64_t wakeup_mask =
+        (1ULL << HID_BUTTON_1_GPIO);
+
+    ESP_LOGI(
+        TAG,
+        "EXT1 wakeup mask: 0x%llX",
+        (unsigned long long)wakeup_mask);
 
     ESP_ERROR_CHECK(
         esp_sleep_pd_config(
@@ -41,18 +48,15 @@ static void enter_deep_sleep(void)
             wakeup_mask,
             ESP_EXT1_WAKEUP_ANY_LOW));
 
-    ESP_LOGI(TAG, "Deep sleep wakeup mask: 0x%llX", wakeup_mask);
+    ESP_LOGI(TAG, "GPIO4 level before sleep: %d",
+             gpio_get_level(HID_BUTTON_1_GPIO));
+
     ESP_LOGI(TAG, "Entering deep sleep...");
 
-    ESP_LOGI(TAG,
-         "GPIO levels before sleep: GPIO4=%d GPIO5=%d GPIO6=%d",
-         gpio_get_level(HID_BUTTON_1_GPIO),
-         gpio_get_level(HID_BUTTON_2_GPIO),
-         gpio_get_level(HID_BUTTON_3_GPIO));
+    gpio_hold_en(HID_BUTTON_1_GPIO);
+    gpio_deep_sleep_hold_en();
 
-ESP_LOGI(TAG, "Entering deep sleep...");
-
-esp_deep_sleep_start();
+    esp_deep_sleep_start();
 }
 
 void hid_buttons_init(esp_hidd_dev_t *hid_dev)
@@ -253,7 +257,7 @@ void hid_buttons_task(void *pvParameters)
 
     ESP_LOGI(TAG, "GPIO5 = 123654");
     ESP_LOGI(TAG, "GPIO6 = DELETE 2 + 12365400");
-    ESP_LOGI(TAG, "Deep sleep timeout started: 2 minutes");
+    ESP_LOGI(TAG, "Deep sleep timeout started: 30 sec");
 
     while (1)
     {
