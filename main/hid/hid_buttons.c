@@ -311,6 +311,15 @@ void hid_buttons_task(void *pvParameters)
      * was booting. The EXT1 wake-up status itself confirms
      * which button caused the wake-up.
      */
+
+if (wakeup_status != 0)
+{
+    ESP_LOGI(
+        TAG,
+        "Wake-up detected. Waiting for BLE HID to be ready...");
+
+    vTaskDelay(pdMS_TO_TICKS(1000));
+}
     if (wakeup_status & (1ULL << HID_BUTTON_1_GPIO))
     {
         ESP_LOGI(TAG, "Wake-up caused by GPIO4");
